@@ -4,6 +4,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, typ
 import { useQuery } from "@tanstack/react-query";
 import { Outlet, useLocation, useNavigate, useNavigationType, useParams } from "@/lib/router";
 import { Sidebar } from "./Sidebar";
+import { CommandNavigation } from "../pages/CommandCenter";
 import { CompanySettingsSidebar } from "./CompanySettingsSidebar";
 import { CompanySettingsNav } from "./access/CompanySettingsNav";
 import { AppsSidebar } from "./AppsSidebar";
@@ -659,7 +660,7 @@ export function Layout({ sidebarSections }: { sidebarSections?: ReactNode }) {
                 {hasSecondarySidebar ? (
                   <SecondarySidebar>{secondarySidebar}</SecondarySidebar>
                 ) : (
-                  <Sidebar>{sidebarSections}</Sidebar>
+                  companyPathSegments[0] === "command" ? <CommandNavigation /> : <Sidebar>{sidebarSections}</Sidebar>
                 )}
               </div>
             </div>
@@ -683,7 +684,7 @@ export function Layout({ sidebarSections }: { sidebarSections?: ReactNode }) {
               {replacesPrimarySidebar ? (
                 <SecondarySidebar>{secondarySidebar}</SecondarySidebar>
               ) : (
-                <Sidebar>{sidebarSections}</Sidebar>
+                companyPathSegments[0] === "command" ? <CommandNavigation /> : <Sidebar>{sidebarSections}</Sidebar>
               )}
             </div>
             <SidebarAccountMenu

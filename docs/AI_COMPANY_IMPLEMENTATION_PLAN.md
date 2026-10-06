@@ -204,3 +204,98 @@ Owner decision required before organizational removal: disposition of out-of-tar
 Main risks: source/runtime mismatch; prompt-only rules mistaken for enforcement; shared workspaces disguised by isolation labels; review of stale revisions; retries that reset their own limit; summary checkpoints mistaken for proof that all evidence was read; staging connected to production execution.
 Status of this deliverable: DESIGNED — initial architecture and task breakdown. Existing source components are present, but their TESTED/BUILT/STAGED/LIVE status must be established individually. Historical test results do not certify the current whole company.
 The first major milestone is reached only when T08 produces a traceable, approved development cycle and the isolation, capacity, review, failure, and rollback checks have evidence. At that point we can truthfully say:
+
+## 2026-09-28 reconciliation - next implementation batch
+
+This addendum narrows the next coding milestone to the owner's clarified Coding + Verification priority. Preserve existing work and reuse Paperclip's assignment, workspace, review, artifact, run, and approval infrastructure. This is a plan, not evidence that these controls are already enforced.
+
+Dependency order:
+
+1. **Establish the execution baseline.** Identify the effective company instructions, active project/workspace policy, and runtime version. Preserve the current dirty tree. Do not import the candidate company package or activate instructions as part of baseline discovery.
+2. **Prove task isolation and topology.** Exercise one coder in an actual isolated workspace; prove two separate workspaces for an explicitly assigned A/B comparison, with no access to the other's unfinished result. Fail closed when isolation prerequisites are missing.
+3. **Bind verification evidence to the submission.** Define the smallest structured evidence contract that records task, exact revision, checks and outcomes, reviewer/tester identity, finding/severity, attempts, correction result, time, and measurable cost. Reuse existing work products/run records where possible; do not create another evidence database by default.
+4. **Enforce independent review and bounded correction.** Make the Reviewer read-only and exact-revision; make reviewer dispatch event-driven. Record one genuine correction allowance durably across reassignment/restart, then stop and escalate. Apply configurable risk-based verification, including independent Tester evidence where appropriate.
+5. **Complete one owner-approved release cycle.** Bind checks, review, staged revision, owner approval, deployment identity, and rollback evidence. Keep high-risk changes/releases owner-approved.
+
+Only after this coding cycle has trustworthy evidence should the implementation start the coding knowledge loop: real-work evidence -> Coding Study -> validated Learning -> Reflection proposal -> owner-approved behavior change -> scoped Coding Memory retrieval. Do not create Study experiments while idle or expand Game, Content, Trading, Business, or other future divisions to match the diagram.
+
+Owner decisions before enforcement: define the configurable verification tiers and approval thresholds; resolve the already-open four-active-agent counting rule before enforcing company-wide capacity. No decision is needed to continue read-only baseline work or implement an opt-in, configurable mechanism.
+
+---
+
+## 2026-09-28 reconciliation — verified gap list and next batch
+
+This supersedes the speculative "next implementation batch" above with what source
+inspection actually established. The ordering below is dependency-correct and each
+step is sized to land on the coding+verification foundation only. Nothing here
+expands Game, Content, Trading, Business, or the Brain.
+
+### Gap list (dependency order)
+
+| # | Gap | Status today | Depends on |
+|---|---|---|---|
+| G1 | Instance-wide capacity not in the working tree | `CODED` on `agent1/global-capacity`, unmerged | — |
+| G2 | Queued-comment claim path bypasses the capacity gate | unaddressed even on that branch (`heartbeat.ts` sets `status: "running"` outside `withAdmissionLock`) | G1 |
+| G3 | Strongest evidence contract exists only on `codex/delivery-evidence-proof`; local copy is weaker and untracked | recoverable via `git show 15bc8725b:…` | — |
+| G4 | **Review verdict carries no revision identity** — the structural gap | `MISSING`; no producer for `revisionReviewed` | G3 |
+| G5 | Evidence contract wired to nothing: not exported, no store, no producer | unwired | G4 |
+| G6 | Reviewer is not capability-limited to read-only | `MISSING` | G4 |
+| G7 | Existing bounded review rounds do not match the target's one correction attempt | `IMPLEMENTED` for configured execution review stages; default is 3 rejected rounds, while Coding must escalate after 2 | G4 |
+| G8 | Risk-tiered verification | `MISSING`; mechanism must stay configurable | G7, **owner decision** |
+| G9 | Company package inverts §16 priority; Reviewer gate stated two ways | source-only, unactivated | — |
+| G10 | Coder isolation never demonstrated on a real task; effective live policy is unknown | proof gap; a prior `shared_workspace`/82-issue report was not runtime-queried | G1, G9 |
+| G11 | Correction-attempt count conflicts with owner intent (impl default 3, owner archive item 57 states one genuine retry) | configuration + proof, not redesign | G7, **owner decision** |
+| G12 | No capability-scope model (read/write/spend/publish/deploy/destructive/secrets/trading) | `MISSING`; `tool-access.ts` is app-gallery access, not these nine scopes | G6 |
+| G13 | No Reviewer/Tester disagreement gate blocking release | `MISSING` in `server/src/services/` | G4 |
+| G14 | No company or branch scoreboard (rejection/retry/rollback/cost/time/escaped bugs) | `MISSING`; `budget_policies`/`budget_incidents` exist but no department budgets | G5 |
+
+G11-G14 are recorded because they are owner decisions with no implementation, not
+because they unblock the coding foundation. G13 belongs in step 4 while the
+review verdict is being extended; the rest stay deferred.
+
+Brain gaps (routing, tests, `learning` built-in overlap, FK integrity) are
+deliberately **excluded** from this batch. The Brain is `CODED` and unwired; per
+§16 it must not be wired before the coding cycle produces trustworthy evidence.
+
+### Recommended next batch
+
+**Step 1 — Land capacity and close the bypass (G1, G2).**
+Merge `agent1/global-capacity` into the integration branch and gate the
+queued-comment claim inside the same `pg_advisory_xact_lock` transaction as the
+claim itself. The `decide()`/`withAdmissionLock` split already makes this a
+localized change. Leave the default at 4 but do **not** enforce a company-wide
+policy until the counting rule is settled — the service is instance-wide by
+design and configurable, which is correct.
+
+**Step 2 — Recover the evidence contract and give review a revision identity (G3, G4).**
+Take `packages/shared/src/delivery-evidence.ts` from `15bc8725b`, not from the
+working tree. Add a revision field to the review verdict so
+`revisionReviewed === submission.sha` has a producer. This is the single change
+that connects §16's "review the exact submitted revision" to anything real.
+Verify by proving a review of a *different* commit cannot satisfy `STAGED`.
+
+**Step 3 — Persist evidence cheaply and deterministically (G5).**
+One table and one service, no model invocation on write. Reuse existing work
+products and run records where they already hold the facts; add a table only
+where they do not. Export the contract from `packages/shared/src/index.ts`.
+
+**Step 4 — Bound the Reviewer and make correction actually fire (G6, G7).**
+Give the Reviewer run an enforced read-only capability rather than relying on
+separate identity, and set an explicit `maxReviewRounds` on the coding pipeline
+so the existing escalation path is live. Add a Tester path only where risk
+warrants — the Tester role already exists in the package.
+
+**Step 5 — Prove isolation and run one real task (G9, G10).**
+Reconcile the company package's priority inversion and the Reviewer gate wording
+**in source only**; do not activate without owner approval. Then run one small
+real task and record the full trace: isolated working directory, exact revision,
+checks, review verdict, bounded retry if any, and the resulting evidence row.
+
+Steps 1-3 are mechanical and low-risk. Step 4 touches capability enforcement.
+Step 5 requires owner approval before anything is activated live.
+
+### Deferred on purpose
+
+Brain wiring, routes, and agents; division expansion; risk-tier policy values;
+UI work beyond what step 5 needs; the shared-UI repair work in the dirty tree.
+None of these unblock the coding foundation.

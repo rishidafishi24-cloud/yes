@@ -30,6 +30,8 @@
 
 Open-source orchestration for teams of AI agents.
 
+This project workspace is now wired to this repository.
+
 **If OpenClaw is an _employee_, Paperclip is the _company_.**
 
 Paperclip is a Node.js server and React UI that orchestrates a team of AI agents to run a business. Bring your own agents, assign goals, and track work and costs from one dashboard.

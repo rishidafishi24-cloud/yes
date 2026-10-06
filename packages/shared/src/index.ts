@@ -199,6 +199,11 @@ export type {
   AttentionWorkspaceRef,
 } from "./types/attention.js";
 export { ATTENTION_SOURCE_KINDS } from "./types/attention.js";
+export type { CompanyEventV1 } from "./company-events.js";
+export {
+  companyEventV1Schema,
+  renderCompanyEventNarrative,
+} from "./company-events.js";
 export type {
   DecisionQueue,
   DecisionQueueItem,

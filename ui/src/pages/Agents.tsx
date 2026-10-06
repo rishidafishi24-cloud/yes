@@ -27,8 +27,9 @@ import { relativeTime, cn, agentRouteRef, agentUrl } from "../lib/utils";
 import { PageTabBar } from "../components/PageTabBar";
 import { Tabs } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Bot, Plus, List, Network } from "lucide-react";
+import { AlertTriangle, Bot, Plus, List, Network, GitBranch } from "lucide-react";
 import { AGENT_ROLE_LABELS, type Agent, type Environment, type EnvironmentCapabilities } from "@paperclipai/shared";
+import { AgentWorkflowView } from "../components/AgentWorkflowView";
 import {
   isStarred,
   resourceMembershipState,
@@ -191,9 +192,9 @@ function filterOrgTree(nodes: OrgNode[], tab: FilterTab, builtInAgentIds: Set<st
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-export type AgentsView = "list" | "org";
+export type AgentsView = "list" | "org" | "workflow";
 
-export function Agents({ initialView = "list" }: { initialView?: AgentsView } = {}) {
+export function Agents({ initialView = "org" }: { initialView?: AgentsView } = {}) {
   const agentChat = useAgentChatEnabled();
   const { selectedCompanyId } = useCompany();
   const { openNewAgent } = useDialogActions();
@@ -204,13 +205,13 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
   const { enabled: streamlinedUiEnabled } = useStreamlinedUiEnabled();
   const pathSegment = location.pathname.split("/").pop() ?? "all";
   const requestedTab: FilterTab = isFilterTab(pathSegment) ? pathSegment : "all";
-  const [view, setView] = useState<AgentsView>(() => streamlinedUiEnabled ? initialView : "org");
+  const [view, setView] = useState<AgentsView>(initialView);
   const forceListView = !streamlinedUiEnabled && isMobile;
   const effectiveView: AgentsView = forceListView ? "list" : view;
 
   useEffect(() => {
-    setView(streamlinedUiEnabled ? initialView : "org");
-  }, [initialView, streamlinedUiEnabled]);
+    setView(initialView);
+  }, [initialView]);
 
   const { data: instanceSettings } = useQuery({
     queryKey: queryKeys.instance.settings,
@@ -479,7 +480,7 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
   return (
     <div className={cn(
       "@container",
-      effectiveView === "org"
+      effectiveView !== "list"
         ? "flex h-full min-h-0 flex-col gap-4"
         : "space-y-4",
     )}>
@@ -516,6 +517,18 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
                 aria-pressed={effectiveView === "org"}
               >
                 <Network className="h-3.5 w-3.5" />
+              </Button>
+              <Button
+                type="button"
+                size="icon-sm"
+                variant={effectiveView === "workflow" ? "secondary" : "ghost"}
+                className="rounded-none border-l border-border"
+                onClick={() => setView("workflow")}
+                title="Workflow view"
+                aria-label="Workflow view"
+                aria-pressed={effectiveView === "workflow"}
+              >
+                <GitBranch className="h-3.5 w-3.5" />
               </Button>
           </div> : null}
           <Button size="sm" variant="outline" onClick={openNewAgent}>
@@ -555,7 +568,21 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
 
       {/* Org chart view */}
       {effectiveView === "org" && filteredOrg.length > 0 && (
-        <OrgChart embedded orgTree={filteredOrg} agents={agents ?? []} />
+        <>
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-semibold">Organization network</h2>
+              <p className="text-sm text-muted-foreground">
+                Reporting relationships and live agent status. Select an agent to inspect its work.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              <span>{filtered.length} agents</span>
+              <span>{runs?.length ?? 0} active runs</span>
+            </div>
+          </div>
+          <OrgChart embedded orgTree={filteredOrg} agents={agents ?? []} />
+        </>
       )}
 
       {effectiveView === "org" && orgTree && orgTree.length > 0 && filteredOrg.length === 0 && (
@@ -568,6 +595,9 @@ export function Agents({ initialView = "list" }: { initialView?: AgentsView } = 
         <p className="text-sm text-muted-foreground text-center py-8">
           No organizational hierarchy defined.
         </p>
+      )}
+      {effectiveView === "workflow" && (
+        <AgentWorkflowView companyId={selectedCompanyId} agents={filtered} />
       )}
       {configureState && selectedCompanyId && (
         <Suspense fallback={null}>

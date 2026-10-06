@@ -224,9 +224,12 @@ export function activityRoutes(db: Db) {
     assertCompanyAccess(req, companyId);
     if (!(await assertCompanyScopeReadAllowed(req, res, companyId))) return;
 
+    const action = z.string().trim().min(1).max(200).optional().safeParse(req.query.action);
+    if (!action.success) throw badRequest("Invalid activity action filter", action.error.issues);
     const filters = {
       companyId,
       agentId: req.query.agentId as string | undefined,
+      action: action.data,
       entityType: req.query.entityType as string | undefined,
       entityId: req.query.entityId as string | undefined,
       limit: normalizeActivityLimit(Number(req.query.limit)),

@@ -4,6 +4,7 @@
 // instrumentationReady before opening DB connections or constructing the
 // HTTP server, so trace coverage does not depend on incidental timing.
 import { instrumentationReady, shutdownInstrumentation } from "./instrumentation.js";
+import { interactionSummaryService } from "./services/interaction-summaries.js";
 import { sentryReady, shutdownSentry, captureException } from "./sentry.js";
 import { waitForPendingRunFailureReports } from "./services/run-failure-report.js";
 import { verifyStoppedNativeSessionForReplacement } from "./services/native-runtime/native-session-executor.js";
@@ -874,6 +875,7 @@ async function startServerWithDatabaseTeardown(
   const heartbeat = config.heartbeatSchedulerEnabled
     ? heartbeatService(db as any, { pluginWorkerManager })
     : null;
+  const interactionSummaries = heartbeat ? interactionSummaryService(db as any, heartbeat) : null;
   const decisionServiceOptions = {
     wakeOriginAgent: createDecisionWakeOriginAgent(heartbeat?.wakeup ?? null),
   };
@@ -1644,6 +1646,9 @@ async function startServerWithDatabaseTeardown(
         }
 
         if (!(await heartbeat.resolveSchedulingSuppression()).suppressed) {
+          trackHeartbeatSchedulerWork(interactionSummaries!.tick().catch((err) => {
+            logger.error({ err }, "interaction summary scheduler failed");
+          }));
           trackHeartbeatSchedulerWork(heartbeat
             .tickTimers(new Date())
             .then((result) => {

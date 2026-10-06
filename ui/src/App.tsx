@@ -24,6 +24,7 @@ import { OnboardingWizardVariant } from "./components/OnboardingWizardVariant";
 import { CloudAccessGate } from "./components/CloudAccessGate";
 import { PaperclipLoading } from "./components/AnimatedPaperclipIcon";
 import { Dashboard } from "./pages/Dashboard";
+import { CommandCenter } from "./pages/CommandCenter";
 import { DashboardLive } from "./pages/DashboardLive";
 import { Timeline } from "./pages/Timeline";
 import { Companies } from "./pages/Companies";
@@ -146,7 +147,8 @@ function ProductionSurface({ children }: { children: ReactNode }) {
 function boardRoutes(streamlinedUiEnabled: boolean) {
   return (
     <>
-      <Route index element={<Navigate to="dashboard" replace />} />
+      <Route index element={<Navigate to="command" replace />} />
+      <Route path="command" element={<CommandCenter />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="dashboard/live" element={<DashboardLive />} />
       <Route
@@ -275,7 +277,7 @@ function boardRoutes(streamlinedUiEnabled: boolean) {
         <Route
           key={tab}
           path={`agents/${tab}`}
-          element={streamlinedUiEnabled ? <Agents /> : <ProductionSurface><ProductionAgents /></ProductionSurface>}
+          element={<Agents />}
         />
       ))}
       <Route path="agents/new" element={<NewAgent />} />

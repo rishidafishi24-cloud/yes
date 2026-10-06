@@ -118,6 +118,19 @@ describe.sequential("activity routes", () => {
     mockAccessService.canUser.mockResolvedValue(false);
   });
 
+  it("passes a validated action filter through the existing activity endpoint", async () => {
+    mockActivityService.list.mockResolvedValue([]);
+    const response = await request(await createApp()).get("/api/companies/company-1/activity?action=issue.comment_added&entityType=issue&limit=500");
+    expect(response.status).toBe(200);
+    expect(mockActivityService.list).toHaveBeenCalledWith(expect.objectContaining({ companyId: "company-1", action: "issue.comment_added", entityType: "issue", limit: 500 }));
+  });
+
+  it("rejects malformed action filters before querying activity", async () => {
+    const response = await request(await createApp()).get("/api/companies/company-1/activity?action=");
+    expect(response.status).toBe(400);
+    expect(mockActivityService.list).not.toHaveBeenCalled();
+  });
+
   it("returns redacted all-actors rows to a basic company reader", async () => {
     mockAgentActionAuditService.list.mockResolvedValue({
       items: [{

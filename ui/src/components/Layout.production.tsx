@@ -18,6 +18,7 @@ import {
   useParams,
 } from "@/lib/router";
 import { Sidebar } from "./Sidebar.production";
+import { CommandNavigation } from "../pages/CommandCenter";
 import { CompanySettingsSidebar } from "./CompanySettingsSidebar.production";
 import { CompanySettingsNav } from "./access/CompanySettingsNav";
 import { AppsSidebar } from "./AppsSidebar.production";
@@ -682,7 +683,7 @@ export function Layout() {
             >
               <div className="flex flex-1 min-h-0 overflow-hidden">
                 <div className="w-60 shrink-0 overflow-hidden">
-                  {hasSecondarySidebar ? secondarySidebar : <Sidebar />}
+                  {hasSecondarySidebar ? secondarySidebar : location.pathname.endsWith("/command") ? <CommandNavigation /> : <Sidebar />}
                 </div>
               </div>
               <SidebarAccountMenu deploymentMode={health?.deploymentMode} />
@@ -699,7 +700,7 @@ export function Layout() {
               onPanelBlurCapture={collapsed ? handlePanelBlur : undefined}
             >
               <div className="flex flex-1 min-h-0">
-                <Sidebar />
+                {location.pathname.endsWith("/command") ? <CommandNavigation /> : <Sidebar />}
               </div>
               <SidebarAccountMenu deploymentMode={health?.deploymentMode} />
             </SidebarShell>

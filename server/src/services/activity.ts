@@ -26,6 +26,7 @@ export interface ActivityFilters {
   agentId?: string;
   entityType?: string;
   entityId?: string;
+  action?: string;
   limit?: number;
 }
 
@@ -343,6 +344,19 @@ export function activityService(db: Db) {
 
       if (filters.agentId) {
         conditions.push(eq(activityLog.agentId, filters.agentId));
+      }
+      if (filters.action) {
+        conditions.push(eq(activityLog.action, filters.action));
+      }
+      // The audit event survives comment deletion; collaboration feeds must not
+      // resurrect deleted comments or treat a stale audit row as live evidence.
+      if (filters.action === "issue.comment_added") {
+        conditions.push(sql`exists (
+          select 1 from ${issueComments}
+          where ${issueComments.id}::text = ${activityLog.details}->>'commentId'
+            and ${issueComments.companyId} = ${activityLog.companyId}
+            and ${issueComments.deletedAt} is null
+        )`);
       }
       if (filters.entityType) {
         conditions.push(eq(activityLog.entityType, filters.entityType));

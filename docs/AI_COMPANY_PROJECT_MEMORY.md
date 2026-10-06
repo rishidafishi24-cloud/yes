@@ -301,8 +301,11 @@ questions are narrow:
 
 1. **Does the max-4-active-agents limit include CEO / Brain / Reviewer, or only active
    workers?** — This blocks plan packet T03. It is an owner decision.
-2. What is the exact internal organization of **Game, Business, Content, Research?**
-   Named deliberately, not yet internally designed.
+2. **How many correction attempts does a coder get after a rejection?** The owner
+   archive states one genuine retry then escalation to the owner; the implementation
+   defaults to 3 rejected rounds. Owner must say which is authoritative.
+3. What is the exact internal organization of **Game, Business, Content?**
+   Named deliberately, not yet internally designed. Research is now settled.
 3. What technologies eventually implement **Memory**, and which candidate tools survive
    testing?
 

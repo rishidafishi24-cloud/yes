@@ -165,6 +165,7 @@ export function Sidebar({ children }: { children?: ReactNode }) {
               collapsed rail, where the old header icon was dropped entirely.
               Cmd/Ctrl+K remains the keyboard path (command palette). */}
           <SidebarNavItem to="/search" label="Search" icon={Search} />
+          <SidebarNavItem to="/command" label="Home" icon={MessagesSquare} />
           <SidebarNavItem to="/dashboard" label="Dashboard" icon={LayoutDashboard} liveCount={liveRunCount} />
           <SidebarNavItem
             to="/inbox"

@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { Agent, Environment, EnvironmentCapabilities } from "@paperclipai/shared";
+import type { Agent, Environment, EnvironmentCapabilities, IssueComment } from "@paperclipai/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ToastProvider } from "../context/ToastContext";
 import type { BuiltInAgentState } from "../api/builtInAgents";
@@ -22,6 +22,9 @@ const mockAgentsApi = vi.hoisted(() => ({
   org: vi.fn(),
 }));
 
+const mockActivityApi = vi.hoisted(() => ({ list: vi.fn().mockResolvedValue([]) }));
+vi.mock("../api/activity", () => ({ activityApi: mockActivityApi }));
+
 const mockBuiltInAgentsApi = vi.hoisted(() => ({
   list: vi.fn(),
   provision: vi.fn(),
@@ -35,6 +38,13 @@ const mockEnvironmentsApi = vi.hoisted(() => ({
 
 const mockHeartbeatsApi = vi.hoisted(() => ({
   liveRunsForCompany: vi.fn(),
+}));
+
+const mockIssuesApi = vi.hoisted(() => ({
+  list: vi.fn(),
+  listComments: vi.fn(),
+  create: vi.fn(),
+  addComment: vi.fn(),
 }));
 
 const mockInstanceSettingsApi = vi.hoisted(() => ({
@@ -88,6 +98,10 @@ vi.mock("../api/environments", () => ({
 
 vi.mock("../api/heartbeats", () => ({
   heartbeatsApi: mockHeartbeatsApi,
+}));
+
+vi.mock("../api/issues", () => ({
+  issuesApi: mockIssuesApi,
 }));
 
 vi.mock("../api/instanceSettings", () => ({
@@ -332,6 +346,10 @@ describe("Agents", () => {
     mockEnvironmentsApi.capabilities.mockResolvedValue(environmentCapabilities);
     mockInstanceSettingsApi.get.mockResolvedValue(makeInstanceSettings());
     mockHeartbeatsApi.liveRunsForCompany.mockResolvedValue([]);
+    mockIssuesApi.list.mockResolvedValue([]);
+    mockIssuesApi.listComments.mockResolvedValue([]);
+    mockIssuesApi.create.mockResolvedValue({});
+    mockIssuesApi.addComment.mockResolvedValue({});
     mockResourceMembershipsApi.listMine.mockResolvedValue({
       projectMemberships: {},
       agentMemberships: {},
@@ -399,12 +417,16 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
     });
     await flushReact();
+    await flushReact();
+
+    const listToggle = container.querySelector<HTMLButtonElement>('button[aria-label="List view"]');
+    await act(async () => { listToggle?.click(); });
     await flushReact();
 
     expect(container.textContent).toContain("codex_local");
@@ -423,7 +445,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="org" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -432,37 +454,199 @@ describe("Agents", () => {
 
     const listToggle = container.querySelector<HTMLButtonElement>('button[aria-label="List view"]');
     const orgToggle = container.querySelector<HTMLButtonElement>('button[aria-label="Org chart view"]');
-    expect(listToggle?.getAttribute("aria-pressed")).toBe("true");
-    expect(orgToggle?.getAttribute("aria-pressed")).toBe("false");
+    expect(listToggle?.getAttribute("aria-pressed")).toBe("false");
+    expect(orgToggle?.getAttribute("aria-pressed")).toBe("true");
     expect(orgToggle?.querySelector(".lucide-network")).not.toBeNull();
     expect(orgToggle?.querySelector(".lucide-git-branch")).toBeNull();
-    expect(container.querySelector('[data-testid="org-chart-viewport"]')).toBeNull();
+    expect(container.querySelector('[data-testid="org-chart-viewport"]')).not.toBeNull();
+
+    await act(async () => {
+      listToggle?.click();
+    });
+    await flushReact();
+    await flushReact();
+
+    expect(listToggle?.getAttribute("aria-pressed")).toBe("true");
+    expect(orgToggle?.getAttribute("aria-pressed")).toBe("false");
+    const orgViewport = container.querySelector('[data-testid="org-chart-viewport"]');
+    expect(orgViewport).toBeNull();
+    expect(container.textContent).toContain("gpt-5.4");
 
     await act(async () => {
       orgToggle?.click();
     });
     await flushReact();
     await flushReact();
-
     expect(mockAgentsApi.org).toHaveBeenCalledWith("company-1");
     expect(orgToggle?.getAttribute("aria-pressed")).toBe("true");
-    const orgViewport = container.querySelector('[data-testid="org-chart-viewport"]');
-    expect(orgViewport).not.toBeNull();
-    expect(orgViewport?.parentElement?.classList.contains("flex-1")).toBe(true);
-    expect(orgViewport?.parentElement?.classList.contains("md:min-h-0")).toBe(true);
-    expect(orgViewport?.parentElement?.classList.contains("h-(--sz-calc-38)")).toBe(false);
-    expect(orgViewport?.parentElement?.parentElement?.classList.contains("h-full")).toBe(true);
-    expect(orgViewport?.parentElement?.parentElement?.classList.contains("min-h-0")).toBe(true);
+    const restoredOrgViewport = container.querySelector('[data-testid="org-chart-viewport"]');
+    expect(restoredOrgViewport).not.toBeNull();
+    expect(restoredOrgViewport?.parentElement?.classList.contains("flex-1")).toBe(true);
+    expect(restoredOrgViewport?.parentElement?.classList.contains("md:min-h-0")).toBe(true);
+    expect(restoredOrgViewport?.parentElement?.classList.contains("h-(--sz-calc-38)")).toBe(false);
+    expect(restoredOrgViewport?.parentElement?.parentElement?.classList.contains("h-full")).toBe(true);
+    expect(restoredOrgViewport?.parentElement?.parentElement?.classList.contains("min-h-0")).toBe(true);
     expect(container.querySelector('[aria-label="Zoom in"]')).not.toBeNull();
     expect(container.querySelector('[aria-label="Zoom out"]')).not.toBeNull();
     expect(container.querySelector('[aria-label="Fit chart to screen"]')).not.toBeNull();
 
+  });
+
+  it("shows task cards and identifies peer feedback in the workspace", async () => {
+    mockAgentsApi.list.mockResolvedValue([
+      makeAgent({
+        id: "agent-1",
+        name: "Alpha",
+        urlKey: "alpha",
+        metadata: { workflow: { branch: "leadership" } },
+      }),
+      makeAgent({
+        id: "agent-2",
+        name: "Reviewer",
+        urlKey: "reviewer",
+        role: "qa",
+        reportsTo: "agent-1",
+        metadata: { workflow: { branch: "coding" } },
+      }),
+      makeAgent({
+        id: "agent-summary",
+        name: "Summarizer",
+        urlKey: "summarizer",
+        role: "general",
+        metadata: { paperclipBuiltInAgent: { key: "summarizer" } },
+      }),
+    ]);
+    mockIssuesApi.list.mockResolvedValue([
+      {
+        id: "issue-1",
+        identifier: "MYMA-21",
+        title: "Build the workflow desk",
+        status: "in_progress",
+        assigneeAgentId: "agent-1",
+        createdAt: new Date("2026-09-26T09:00:00Z"),
+        updatedAt: new Date("2026-09-26T10:00:00Z"),
+      },
+      {
+        id: "summary-issue",
+        identifier: "MYMA-22",
+        title: "[Interaction summary] coding -> leadership",
+        status: "in_progress",
+        assigneeAgentId: "agent-summary",
+        createdAt: new Date("2026-09-26T10:01:00Z"),
+        updatedAt: new Date("2026-09-26T10:02:00Z"),
+      },
+    ]);
+    const peerComments = [
+      {
+        id: "comment-1",
+        companyId: "company-1",
+        issueId: "issue-1",
+        authorType: "agent",
+        authorAgentId: "agent-2",
+        authorUserId: null,
+        body: "Please add coverage for the mobile layout.",
+        presentation: null,
+        metadata: null,
+        createdAt: new Date("2026-09-26T10:00:00Z"),
+        updatedAt: new Date("2026-09-26T10:00:00Z"),
+      } satisfies IssueComment,
+    ];
+    mockActivityApi.list.mockResolvedValue([{
+      id: "00000000-0000-4000-8000-000000000001",
+      companyId: "company-1",
+      action: "issue.comment_added",
+      entityType: "issue",
+      entityId: "issue-1",
+      agentId: "agent-2",
+      createdAt: "2026-09-26T10:00:00Z",
+      details: { commentId: "comment-1" },
+    }]);
+    const summaryComments = [{
+      id: "summary-comment",
+      companyId: "company-1",
+      issueId: "summary-issue",
+      authorType: "agent",
+      authorAgentId: "agent-summary",
+      authorUserId: null,
+      body: "## What they're discussing\nThe reviewer asked for better mobile coverage.\n\n```ts\nconst privateDetail = true;\n```\n\n## Why the other branch was involved\nLeadership owns the task being reviewed.\n\n## Decisions or advice\nTest the mobile layout before release.\n\n## Next action and owner\nAlpha will add the requested coverage.",
+      presentation: null,
+      metadata: null,
+      createdAt: new Date("2026-09-26T10:02:00Z"),
+      updatedAt: new Date("2026-09-26T10:02:00Z"),
+    } satisfies IssueComment];
+    summaryComments[0].body += "\n<!-- interaction-checkpoint:00000000-0000-4000-8000-000000000001:2026-09-26T10:00:00.000Z -->";
+    mockIssuesApi.listComments.mockImplementation((issueId: string) =>
+      Promise.resolve(issueId === "summary-issue" ? summaryComments : peerComments));
+
+    root = createRoot(container);
     await act(async () => {
-      listToggle?.click();
+      root!.render(
+        <QueryClientProvider client={queryClient}>
+          <ToastProvider>
+            <Agents />
+          </ToastProvider>
+        </QueryClientProvider>,
+      );
     });
     await flushReact();
-    expect(container.querySelector('[data-testid="org-chart-viewport"]')).toBeNull();
-    expect(container.textContent).toContain("gpt-5.4");
+
+    const workflowToggle = container.querySelector<HTMLButtonElement>(
+      'button[aria-label="Workflow view"]',
+    );
+    await act(async () => {
+      workflowToggle?.click();
+    });
+    await flushReact();
+    const dependenciesView = [...container.querySelectorAll<HTMLButtonElement>("button")]
+      .find((button) => button.textContent === "Dependencies");
+    await act(async () => {
+      dependenciesView?.click();
+    });
+    await flushReact();
+    await flushReact();
+    expect(container.textContent).toContain("Recent observed collaboration");
+    expect(mockActivityApi.list).toHaveBeenCalledWith("company-1", expect.objectContaining({ action: "issue.comment_added" }));
+    expect(container.textContent).toContain("Reviewer");
+    expect(container.textContent).toContain("commented on");
+    expect(container.textContent).toContain("Alpha");
+    expect(container.textContent).toContain("1 time");
+    expect(container.textContent).toContain("What they're discussing");
+    expect(container.textContent).toContain("The reviewer asked for better mobile coverage.");
+    expect(container.textContent).toContain("Why the other branch was involved");
+    expect(container.textContent).toContain("Alpha will add the requested coverage.");
+    expect(container.textContent).not.toContain("privateDetail");
+    expect(container.textContent).toContain("View evidence · 1 task");
+
+    const tasksView = [...container.querySelectorAll<HTMLButtonElement>("button")]
+      .find((button) => button.textContent === "Tasks");
+    await act(async () => {
+      tasksView?.click();
+    });
+    await flushReact();
+
+    expect(mockIssuesApi.list).toHaveBeenCalledWith(
+      "company-1",
+      expect.objectContaining({ limit: 100, sortField: "updated" }),
+    );
+    const inspectFeedback = [...container.querySelectorAll<HTMLButtonElement>("button")]
+      .find((button) => button.textContent?.includes("Inspect feedback"));
+    await act(async () => {
+      inspectFeedback?.click();
+    });
+    await flushReact();
+
+    expect(mockIssuesApi.listComments).toHaveBeenCalledWith("issue-1", {
+      order: "desc",
+      limit: 20,
+    });
+    expect(container.querySelector('a[href="/issues/MYMA-21"]')).not.toBeNull();
+    expect(container.textContent).toContain("Reviewer");
+    expect(container.textContent).toContain("Peer input");
+    expect(container.textContent).toContain("Please add coverage for the mobile layout.");
+    expect(container.textContent).toContain("Feedback about MYMA-21");
+    expect(container.textContent).toContain("Owner: Alpha");
+    expect(container.textContent).toContain("1 of 1 recent tasks");
+    expect(container.textContent).toContain("Build the workflow desk");
   });
 
   it("gives mobile agent names the full row width after the leading status indicator", async () => {
@@ -492,7 +676,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -561,7 +745,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -595,7 +779,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -628,7 +812,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -656,7 +840,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -695,7 +879,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -754,7 +938,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -818,7 +1002,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -862,7 +1046,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -880,7 +1064,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -900,7 +1084,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -953,7 +1137,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -975,7 +1159,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -1012,7 +1196,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -1020,7 +1204,15 @@ describe("Agents", () => {
     await flushReact();
     await flushReact();
 
-    // List view (default).
+    // The network is the default; select the roster to inspect row actions.
+    const listToggle = Array.from(container.querySelectorAll("button")).find(
+      (btn) => btn.querySelector("svg.lucide-list"),
+    );
+    await act(async () => {
+      listToggle!.click();
+    });
+    await flushReact();
+
     const orgAction = container.querySelector('[aria-label="Leave Alpha"]');
     const orgStar = container.querySelector('[aria-label="Star Alpha"]');
     expect(orgAction).not.toBeNull();
@@ -1029,9 +1221,6 @@ describe("Agents", () => {
     expect(orgStar?.closest(".hidden")).not.toBeNull();
 
     // List view remains stable after explicitly selecting it.
-    const listToggle = Array.from(container.querySelectorAll("button")).find(
-      (btn) => btn.querySelector("svg.lucide-list"),
-    );
     await act(async () => {
       listToggle!.click();
     });
@@ -1064,7 +1253,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );
@@ -1088,7 +1277,7 @@ describe("Agents", () => {
       root!.render(
         <QueryClientProvider client={queryClient}>
           <ToastProvider>
-            <Agents />
+            <Agents initialView="list" />
           </ToastProvider>
         </QueryClientProvider>,
       );

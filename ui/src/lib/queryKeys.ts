@@ -721,4 +721,7 @@ export const queryKeys = {
   adapters: {
     all: ["adapters"] as const,
   },
+  narrative: {
+    events: (companyId: string) => ["narrative", "events", companyId] as const,
+  },
 };
