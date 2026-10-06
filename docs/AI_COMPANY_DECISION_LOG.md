@@ -474,3 +474,16 @@ model call.
 ### Audit evidence boundary - 2026-09-28
 
 The source reconciliation did not run tests, start a server, or query a Paperclip instance. Any earlier report of 82 live issues or null live workspace/review settings is an unverified historical claim; current runtime state remains unknown. The `not_creator` policy separates review requester and verdict writer, not necessarily implementation author and reviewer. Execution review rounds default to 3 when that workflow is configured; Coding must use a limit of 2 rejected rounds to allow one correction and then escalate. Do not treat these source-level facts as proof of live activation.
+
+
+### Content division internals - 2026-10-06 (owner decision)
+
+The owner chose a first Content design. This partly resolves the earlier "Content internals UNRESOLVED" status and is recorded as an owner decision, not a verified implementation.
+
+- Formats: shorts for every platform, long ambient videos, music and music videos, and AI animated shorts. Animation uses AI video generation, not Blender. Start free and spend more only after the concept is validated.
+- Pipeline: brief -> batch of single-change variants -> automatic checks -> Content Reviewer -> owner picks with reasons -> publish -> views -> Learning and Memory. Specified in `companies/networked-ai-company/skills/content-pipeline/SKILL.md`.
+- Roster, activated in stages with owner approval: Stage 1 Shorts Creator (first) and Content Reviewer; Stage 2 Ambient Creator; Stage 3 Music Creator and Animation Creator. The Content Lead already exists.
+- Owner picks and reasons go to the **Learning agent**, not Study. Study runs its own process, based on online research and owner comparison. This differs from the earlier description of Study feeding Learning (see Learning handoff `docs/learning-handoffs/2026-10-06-eval-and-self-check-proposals.md`) and the architecture docs have not been updated.
+- Mechanical work (render, cut, loop, loudness, captions, upload, stats) is scripts, not agents.
+- Reposting other creators' videos with light edits is not allowed; every video needs a complete license file.
+- Open: how the four-active-agent limit counts these roles; no check scripts exist yet; Learning has no reader for owner-pick packets yet; free AI tool limits and terms must be checked at setup.
