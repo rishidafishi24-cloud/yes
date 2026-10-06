@@ -47,7 +47,7 @@ Every item needs a `source`, a `license` (not "unknown" or "all rights reserved"
 
 ## Scope
 
-This toolkit edits and checks files. It does not download videos or publish anything. What footage you feed it, and whether you have the right to use it, is your responsibility. Reposting videos you don't have rights to risks strikes, demonetization, or removal on every platform.
+This toolkit edits and checks files. The only downloading it does is `sources.py get`, which fetches footage from the four licensed sources above and records the license. It does not scrape other videos and it does not publish anything. What footage you feed it, and whether you have the right to use it, is your responsibility. Reposting videos you don't have rights to risks strikes, demonetization, or removal on every platform.
 
 ## Test status
 
