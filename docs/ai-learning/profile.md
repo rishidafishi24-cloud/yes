@@ -51,3 +51,4 @@ Updated 2026-10-14 from two chats: the local Claude Code session (Oct 13–14) a
 - Combat camera should follow automatically with a fast, sharp response; hands are occupied with combat inputs, so continual use of the look stick should not be required. Foreground walls/surfaces blocking the action should become extremely transparent. Target switching and teleport tracking remain unresolved.
 - Detailed confirmed/open/proposed game context: .cursor/rules/game-product-context.mdc and docs/design/power-scaled-movement-combat.md in the game project.
 - 2026-10-14: **Live demos on their own model beat explanations.** Three explanations failed, but one real experiment (deleted message + warm cache, via the LM Studio API) made it concrete. Prefer "prove it on their PC" when possible.
+- 2026-10-14: **Rule: answer my latest message directly, first.** No recap or jumping ahead before the answer.
