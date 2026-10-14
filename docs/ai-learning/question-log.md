@@ -138,3 +138,19 @@ Results: ✓ right, ✗ wrong, ? not sure, ~ partly right. Rounds marked *biased
 
 ## Yo cloud chat, 2026-10-13 to 14
 The full questions and answers are in `2026-10-14-yo-session-transcript.md` (user turns 38 and 46 to 55). Results are in `ai-from-the-ground-up-progress.md`. Topics asked there: git/GitHub, decompiling vs. embedding, quantization sizes, A3B, provider weights, RLHF, skill vs. MCP, memory, agent compounding (35%), 16B at Q2 vs. 9B at Q4, the app fulfilling requests, context shortening, pinning, LoRA, embeddings as space, diffusion, the lethal trifecta, and the system prompt / RAG / fine-tune cost order.
+
+## Tutor cycle 1: AI layering and tools (2026-10-14, re-gauge at the owner's request, fair options)
+| Q | Answer | Result |
+|---|---|---|
+| L1 What LM Studio receives on message 10 | Only message 10 | ✗ (3rd miss on statelessness) |
+| L2 Zed AI panel vs. Claude Code | Assistant vs. agent | ✓ |
+| L3 Connector vs. MCP | A connector is a remote MCP server | ✓ |
+| L4 40-tool MCP server in LM Studio | 40 text descriptions in the package | ✓ |
+| M1 What a plugin is | A bundle ("but how do the layers work together?") | ✓ |
+| M2 Upload with an official API available | Use the API | ✓ |
+| M3 Injected "delete the project folder" | Delete off or gated | ✓ |
+| M4 Odysseus at 85% context | Older half summarized | ✓ |
+| N1 Order of skill + tool events | Not sure | ? |
+| N2 Skill vs. system prompt conflict | Nothing guarantees it | ✓ |
+| N3 Local to OpenRouter: which layers change | Model and provider | ✓ |
+| N4 Same REA server, different results in different apps | "Repos are built for Claude Code" | ~ |

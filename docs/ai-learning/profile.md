@@ -40,3 +40,5 @@ Updated 2026-10-14 from two chats: the local Claude Code session (Oct 13–14) a
 
 ## Teaching-style log
 (Each cycle, add which lesson version they picked, A or B, and why.)
+- 2026-10-14, cycle 1 (layering): didn't pick A or B. Wants **UML diagrams where possible, with a technical and a plain-English explanation side by side** until the terms are solid. Default to this format.
+- 2026-10-14: what they want is "an agent I can talk to that keeps learning off me and adding context", and they don't want it complicated. This setup (chat + notes files + skill) is that. Don't add agents or tools for it.

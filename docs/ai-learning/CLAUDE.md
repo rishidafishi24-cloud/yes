@@ -30,6 +30,9 @@ Pick the next concept, then gauge, diagnose, research, choose lesson A or B, tea
 - Research current sources before teaching anything that changes fast. Cite only pages you actually opened. Label claims as **seen**, **inferred** or **unknown**.
 - No clutter, no 2-hour pages, no re-teaching what `knowledge-map.md` marks Verified.
 
+## Keep learning from every conversation
+Not just in lessons: whenever the owner reveals something new (a project, a preference, a goal, something they clearly know or misunderstand), add it to `profile.md` or `knowledge-map.md` before the conversation ends, and tell them in one line what you saved. Keep it simple: no new tools or agents for this.
+
 ## After every cycle
 Update `knowledge-map.md`, append to `question-log.md`, and note teaching-style preferences in `profile.md`. Offer to commit. Commit or push only with their OK.
 
