@@ -1,0 +1,198 @@
+<title>Your AI Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column; each stage is a card because stages are separate units you work through one at a time. */
+:root{
+  --bg:#F2F4F3; --surface:#FFFFFF; --ink:#16201C; --muted:#56635D; --line:#D8DEDA;
+  --accent:#0E6B63; --accent-soft:#DDEEEB; --mark:#F6D860; --mark-ink:#16201C;
+  --good:#2B7A4B; --warn:#A5660F; --bad:#B23A2F;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#111816; --surface:#19221F; --ink:#E4EBE7; --muted:#9AA8A1; --line:#2B3632;
+  --accent:#58C2B6; --accent-soft:#17352F; --mark:#E0C04B; --mark-ink:#131A17;
+  --good:#5CC98B; --warn:#E3AA4E; --bad:#EF7C71; color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#111816; --surface:#19221F; --ink:#E4EBE7; --muted:#9AA8A1; --line:#2B3632;
+  --accent:#58C2B6; --accent-soft:#17352F; --mark:#E0C04B; --mark-ink:#131A17;
+  --good:#5CC98B; --warn:#E3AA4E; --bad:#EF7C71; color-scheme:dark; }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17.5px;line-height:1.6}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:780px;margin:0 auto;padding-inline:20px;padding-block:40px 96px}
+.meta{font-family:var(--f-mono);font-size:13px;color:var(--muted);margin:0 0 10px}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(38px,7.5vw,60px);line-height:1;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+h1 .hl{background:linear-gradient(transparent 60%,var(--mark) 60%);padding:0 4px}
+.sub{font-size:19px;color:var(--muted);margin:0 0 24px;max-width:60ch}
+h2{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,4.5vw,32px);line-height:1.1;margin:48px 0 12px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:21px;line-height:1.25;margin:0;text-wrap:balance}
+p,li{max-width:66ch}
+code{font-family:var(--f-mono);font-size:.84em;background:var(--bg);padding:1px 5px;border-radius:4px}
+.loop{list-style:none;padding:0;margin:16px 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;counter-reset:lp}
+.loop li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;counter-increment:lp;font-size:15px;min-width:0}
+.loop li::before{content:counter(lp);display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--surface);font-family:var(--f-mono);font-size:13px;font-weight:600;margin-bottom:6px}
+.loop b{display:block;font-family:var(--f-display);font-size:16px}
+.now{background:var(--accent-soft);border-radius:14px;padding:16px 20px;margin:20px 0}
+.now b{font-family:var(--f-display)}
+.now ol{margin:8px 0 0;padding-left:22px}
+.tablewrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:15.5px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-display);font-size:14px;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:18px 0;scroll-margin-top:16px}
+.stage.cur{border:2px solid var(--accent)}
+.st-head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+.st-num{font-family:var(--f-mono);font-size:13px;color:var(--accent);font-weight:600}
+.pill{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 9px;border-radius:999px;border:1px solid currentColor;margin-left:auto;white-space:nowrap}
+.pill.ready{color:var(--good)}.pill.next{color:var(--accent)}.pill.later{color:var(--muted);border-style:dashed}
+.why{color:var(--muted);margin:4px 0 12px}
+.why b{color:var(--ink)}
+.cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px}
+.lbl{display:block;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.cols ul{margin:0;padding-left:20px;font-size:15.5px}
+.cols li{margin-bottom:5px}
+.build{margin-top:14px;border-left:4px solid var(--mark);background:var(--bg);padding:10px 14px;border-radius:0 10px 10px 0;font-size:15.5px}
+.build b{font-family:var(--f-display)}
+.thread{border-left:4px solid var(--warn);background:var(--surface);padding:12px 18px;margin:14px 0;border-radius:0 10px 10px 0}
+footer{margin-top:44px;color:var(--muted);font-size:14px}
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .loop{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cols{grid-template-columns:minmax(0,1fr)}
+  .pill{margin-left:0}
+}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="meta">Built from 2 chats, about 80 of your answers, and 2 research passes · October 2026</p>
+  <h1>Your AI <span class="hl">roadmap</span></h1>
+  <p class="sub">Eight stages, from how AI works to building your own AI experiment lab. Every stage is tied to a project you're already working on, so nothing here is theory for its own sake.</p>
+</header>
+
+<h2>How every stage works</h2>
+<ol class="loop">
+  <li><b>Gauge</b>Fair questions find exactly where your knowledge stops. About 10 minutes.</li>
+  <li><b>Lesson</b>One clean page that starts at that edge and skips what you know.</li>
+  <li><b>Build</b>A milestone on one of your real projects, using what you just learned.</li>
+  <li><b>Re-test</b>New questions on the stage. Around 80% means you move on.</li>
+</ol>
+
+<div class="now">
+  <b>Where you are right now: Stage 1</b>
+  <ol>
+    <li>Read <a href="https://claude.ai/artifact/FGWgjnKvuUotLna9vyZheb" target="_blank" rel="noopener">AI From the Ground Up</a> using the reading plan at the top of it.</li>
+    <li>Do the "Try it" boxes in chapters 1, 5 and 9. They take about 15 minutes in total.</li>
+    <li>Tell Claude you're done. You'll get the Stage 1 re-test, and then Stage 2's gauge.</li>
+  </ol>
+</div>
+
+<h2>Your projects, and the stages that power them</h2>
+<div class="tablewrap"><table>
+  <thead><tr><th>Your project</th><th>What it needs</th><th>Stages</th></tr></thead>
+  <tbody>
+    <tr><td><b>Paperclip</b> (multi-agent company, coding exam)</td><td>Fair measurement, then better agent design</td><td>2, 3</td></tr>
+    <tr><td><b>Learning agent</b> (your "A or B, and why" picks)</td><td>Preference data, then training on it</td><td>2, 7</td></tr>
+    <tr><td><b>Research agent</b> (search, transcripts, repos)</td><td>Reliable citing, the right tools, evals</td><td>4</td></tr>
+    <tr><td><b>Game modding</b> (Unity, REA, Universal Modder)</td><td>Decompiling, specs, re-implementing, legal lines</td><td>5</td></tr>
+    <tr><td><b>Content pipeline</b> (shorts, ambient, animation)</td><td>How image and video models work, pipelines, platform rules</td><td>6</td></tr>
+    <tr><td><b>Jev layer</b> (fast, cheap decisions)</td><td>Routing between small and big models</td><td>3</td></tr>
+    <tr><td><b>AI Experiment Lab</b> (test models, prompts, tools and weights)</td><td>Everything, combined</td><td>8</td></tr>
+  </tbody>
+</table></div>
+
+<h2>The eight stages</h2>
+
+<section class="stage cur" id="s1">
+  <div class="st-head"><span class="st-num">STAGE 1</span><h3>Foundations: how AI really works</h3><span class="pill ready">Lesson ready</span></div>
+  <p class="why"><b>Why for you:</b> your biggest gaps were underneath: what gets sent each message, how tools and MCP layer, quantization, git and JSON. Every later stage stands on these.</p>
+  <div class="cols">
+    <div><span class="lbl">You'll learn</span><ul><li>One request, start to finish: the package, overflow, caching, chat templates</li><li>The four layers, and how tools, MCP, skills and plugins plug in</li><li>How agents see their environment, and API vs. browser vs. mouse</li><li>Builder basics, memory and RAG, how models are made, your RX 580</li></ul></div>
+    <div><span class="lbl">Already yours (skim)</span><ul><li>Tokens, temperature, system prompts</li><li>Agents as loops, subagents</li><li>APIs, ports, keys, hosting</li></ul></div>
+  </div>
+  <div class="build"><b>Build:</b> an environment briefing for your Odysseus model, and your own tokens-per-second numbers for a 9B model and a 30B-A3B model.</div>
+</section>
+
+<section class="stage" id="s2">
+  <div class="st-head"><span class="st-num">STAGE 2</span><h3>Measure, don't guess: evals like a pro</h3><span class="pill next">Next</span></div>
+  <p class="why"><b>Why for you:</b> you already invented the core of this in Yo: run it 10 times, compare to a baseline, pick A or B. This stage turns that instinct into a real method, and it comes before design because you can't improve what you can't measure.</p>
+  <div class="cols">
+    <div><span class="lbl">You'll learn</span><ul><li>Baselines and luck: how many runs it takes before a difference is real</li><li>Three kinds of grader: hidden tests, AI judges, and pairwise A-vs-B</li><li>Keeping the exam honest: hidden answers, checking the grader catches wrong work</li><li>Tracing: recording every package and tool call so you can see why something failed</li><li>Cost and speed as scores, not just "did it work"</li><li>Tools: promptfoo (its repeat setting) and Langfuse for traces</li></ul></div>
+    <div><span class="lbl">Already yours</span><ul><li>Run it many times, never trust the first response</li><li>Compare against the old version</li><li>Let the model check its own work</li></ul></div>
+  </div>
+  <div class="build"><b>Build:</b> finish Paperclip's 6-task exam, measure the luck gap, then compare two setups (for example, medium vs. low thinking).</div>
+</section>
+
+<section class="stage" id="s3">
+  <div class="st-head"><span class="st-num">STAGE 3</span><h3>Designing agent systems</h3><span class="pill later">Later</span></div>
+  <p class="why"><b>Why for you:</b> Paperclip has a CEO, a Reviewer and hand-offs. This stage teaches when extra agents help, when they just burn tokens, and where a fast layer like Jev fits.</p>
+  <div class="cols">
+    <div><span class="lbl">You'll learn</span><ul><li>Context engineering as the core job of a harness</li><li>Orchestrator and workers: how Anthropic's own research system is built, and its costs (agents use about 4x the tokens of chat, multi-agent about 15x)</li><li>Routing: cheap, fast decision models (like Jev) for small choices, big models for hard thinking</li><li>Tool design, memory files (CLAUDE.md, an Obsidian vault of notes), hooks and permissions</li><li>Common failures: endless loops, vague hand-offs, agents grading their own homework</li></ul></div>
+    <div><span class="lbl">Already yours</span><ul><li>Fewer tools is better</li><li>Remove risky tools rather than trust prompts</li></ul></div>
+  </div>
+  <div class="build"><b>Build:</b> use your Stage 2 exam to test whether Paperclip's Reviewer actually raises the score, and keep it only if it does.</div>
+</section>
+
+<section class="stage" id="s4">
+  <div class="st-head"><span class="st-num">STAGE 4</span><h3>Research agents you can trust</h3><span class="pill later">Later</span></div>
+  <p class="why"><b>Why for you:</b> you asked why AI keeps lacking current information, and how to get an agent that finds transcripts and repos the way you do.</p>
+  <div class="cols">
+    <div><span class="lbl">You'll learn</span><ul><li>Search vs. actually opening the page, and why the difference matters</li><li>The core rule: cite only pages it opened, with a quote and a URL</li><li>Why AI citations go wrong so often, and how to catch it</li><li>The tools: last30days, yt-dlp for transcripts (and its limits), GitHub MCP in read-only mode</li><li>Saving research as dated markdown notes (Obsidian), not hype</li></ul></div>
+    <div><span class="lbl">Already yours</span><ul><li>Compare against other sources</li><li>Search tools add fresh facts</li></ul></div>
+  </div>
+  <div class="build"><b>Build:</b> a research agent that writes a cited brief, graded on 10 of your own questions with the Stage 2 method.</div>
+</section>
+
+<section class="stage" id="s5">
+  <div class="st-head"><span class="st-num">STAGE 5</span><h3>Reverse engineering with agents</h3><span class="pill later">Later</span></div>
+  <p class="why"><b>Why for you:</b> REA and Universal Modder are your core tools, and you want to understand how mechanics are built before improving on them.</p>
+  <div class="cols">
+    <div><span class="lbl">You'll learn</span><ul><li>Source code vs. compiled programs, and what a decompiler gets back</li><li>Unity specifics: Mono builds keep .NET code that decompiles well, IL2CPP builds are much harder</li><li>Static analysis (reading) vs. dynamic analysis (running), and why running needs a VM</li><li>The workflow: understand a mechanic, write a spec, re-implement it, test it</li><li>REA with Ghidra or JEB, Universal Modder's skills, and the legal lines</li></ul></div>
+    <div><span class="lbl">Already yours</span><ul><li>Understand first, then improve, not copy</li></ul></div>
+  </div>
+  <div class="build"><b>Build:</b> run REA on <em>your own</em> Unity build, where you already have the source, and grade its explanations against the real code. You know the right answers, which makes it the perfect test of REA itself.</div>
+</section>
+
+<section class="stage" id="s6">
+  <div class="st-head"><span class="st-num">STAGE 6</span><h3>Image and video pipelines</h3><span class="pill later">Later</span></div>
+  <p class="why"><b>Why for you:</b> your content pipeline, and your question about how well image generators understand context, which is their weak spot.</p>
+  <div class="cols">
+    <div><span class="lbl">You'll learn</span><ul><li>How diffusion image and video models read a prompt, and their known weak spots: counting, exact text, positions, rare concepts</li><li>Why realistic people come easy and unusual styles don't (training data)</li><li>Controlling style: reference images, style LoRAs, consistent characters</li><li>Hosted services (Higgsfield, fal) and credit costs</li><li>Automating script, assets, edit and upload</li><li>Platform rules: copyright claims, "reused content" policies and strikes, so you know the risks of reposting</li></ul></div>
+    <div><span class="lbl">Already yours</span><ul><li>Pick A or B and record why</li></ul></div>
+  </div>
+  <div class="build"><b>Build:</b> the free ambient-video pipeline first, with your A-or-B picks flowing into the learning agent.</div>
+</section>
+
+<section class="stage" id="s7">
+  <div class="st-head"><span class="st-num">STAGE 7</span><h3>Changing the model itself</h3><span class="pill later">Later</span></div>
+  <p class="why"><b>Why for you:</b> you want an app that changes weights in small steps and tests each one. Your "A vs. B and why" picks are already the exact kind of data used to train models (DPO).</p>
+  <div class="cols">
+    <div><span class="lbl">You'll learn</span><ul><li>When to prompt, use RAG or fine-tune (you know the cost order already)</li><li>LoRA and QLoRA on a free cloud notebook, since your RX 580 can't train</li><li>Turning your preference picks into a DPO training set</li><li>Embeddings for searching by meaning and matching styles</li><li>Proving a fine-tune helped, with Stage 2 evals against the base model</li></ul></div>
+    <div><span class="lbl">Already yours</span><ul><li>Prompt, then RAG, then fine-tune, from cheap to expensive</li><li>Embeddings as a space of meanings</li></ul></div>
+  </div>
+  <div class="build"><b>Build:</b> a small LoRA trained on your own preferences, measured against the original model.</div>
+</section>
+
+<section class="stage" id="s8">
+  <div class="st-head"><span class="st-num">STAGE 8</span><h3>Capstone: your AI Experiment Lab</h3><span class="pill later">Later</span></div>
+  <p class="why"><b>Why for you:</b> it's the app you said you wanted: a place to experiment with models, prompts, tools and weights, and calibrate them by testing. It combines every stage.</p>
+  <div class="cols">
+    <div><span class="lbl">You'll learn</span><ul><li>Designing it: configs, repeated runs, scoring, preference capture, traces</li><li>Building on existing tools (promptfoo, Langfuse) instead of starting from zero</li><li>Directing coding agents through a real multi-part build</li></ul></div>
+    <div><span class="lbl">Already yours</span><ul><li>The idea, and the scientific method behind it</li></ul></div>
+  </div>
+  <div class="build"><b>Build:</b> Lab version 1. Compare your local model, a cloud model and a fine-tune on one task, with real numbers.</div>
+</section>
+
+<h2>Running through every stage</h2>
+<div class="thread"><b>Safety.</b> Permissions, prompt injection, pinned versions, secrets and VMs come up in every stage as they become relevant, not as a separate unit.</div>
+<div class="thread"><b>Reading code, lightly.</b> Enough Python and C# to check what agents write and spot red flags, picked up through your projects. No writing from scratch.</div>
+<div class="thread"><b>Keeping current.</b> New repos show up daily. Each one gets the five questions from Chapter 12 of Stage 1, and research before anything gets added.</div>
+
+<footer>The order can change: if a re-test shows you already know a stage, it gets skipped. Built from this chat, the Yo chat, and two research passes in October 2026.</footer>
+</div>

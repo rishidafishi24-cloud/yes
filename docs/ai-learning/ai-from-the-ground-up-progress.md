@@ -1,5 +1,7 @@
 # AI from the ground up: progress notes
 
+> Merged into `knowledge-map.md` on 2026-10-14. That file is now the source of truth.
+
 Saved 2026-10-14. Built from a question-and-teach loop: ask short questions, teach only what was missed, re-ask a different way, and stop when a concept is right twice in a row.
 
 Learner setup: Ryzen 5 2600, 16 GB RAM, RX 580 8 GB (about 7.2 GB usable VRAM). Apps: LM Studio, Odysseus, Zed, Claude Code, Codex.

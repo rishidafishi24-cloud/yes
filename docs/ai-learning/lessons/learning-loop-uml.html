@@ -1,0 +1,154 @@
+<title>Learning Loop Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a blueprint for approval. One column; each UML view sits in its own scrollable frame, numbered because they are reviewed in order. */
+:root{
+  --bg:#EEF2F4; --surface:#FFFFFF; --ink:#132029; --muted:#53636D; --line:#CFD9DE;
+  --accent:#1F5F8B; --accent-soft:#DCEAF3; --mark:#F2C94C; --good:#2B7A4B; --bad:#B23A2F;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0F171C; --surface:#172229; --ink:#E3EAEE; --muted:#97A8B2; --line:#2A3943;
+  --accent:#6FB0DD; --accent-soft:#183246; --mark:#E0BC4A; --good:#5CC98B; --bad:#EF7C71; color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#0F171C; --surface:#172229; --ink:#E3EAEE; --muted:#97A8B2; --line:#2A3943;
+  --accent:#6FB0DD; --accent-soft:#183246; --mark:#E0BC4A; --good:#5CC98B; --bad:#EF7C71; color-scheme:dark; }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding-inline:20px;padding-block:36px 80px}
+.tag{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6.5vw,52px);line-height:1.02;letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance}
+.sub{font-size:19px;color:var(--muted);margin:0 0 8px;max-width:62ch}
+h2{font-family:var(--f-display);font-weight:700;font-size:24px;line-height:1.2;margin:44px 0 6px;display:flex;gap:12px;align-items:baseline;text-wrap:balance}
+h2 .n{font-family:var(--f-mono);font-size:13px;color:var(--accent);font-weight:600}
+p,li{max-width:68ch}
+.frame{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;overflow-x:auto}
+.frame pre.mermaid{margin:0;background:transparent;font-size:14px;min-width:560px}
+.reads{font-size:15.5px;color:var(--muted);margin:6px 0 0}
+.tablewrap{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15.5px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-display);font-size:14px;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.old{color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;list-style:none;padding:0;margin:14px 0}
+.rules li{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 14px;font-size:15.5px;min-width:0}
+.rules b{display:block;font-family:var(--f-display)}
+.rules small{color:var(--muted)}
+.approve{background:var(--accent-soft);border-radius:14px;padding:16px 20px;margin-top:40px}
+.approve h3{font-family:var(--f-display);margin:0 0 6px;font-size:20px}
+.approve ol{margin:6px 0 0;padding-left:22px}
+@media (max-width:640px){ .rules{grid-template-columns:minmax(0,1fr)} body{font-size:16px} }
+</style>
+
+<div class="wrap">
+  <p class="tag">Draft for your approval · UML</p>
+  <h1>Your learning loop, redesigned</h1>
+  <p class="sub">Built from this chat and the Yo chat. Nothing gets taught until you approve how teaching works. Three views of the same process: what happens, who does what, and how each concept moves from unknown to mastered.</p>
+
+  <h2><span class="n">01</span>What changes</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th></th><th>Before (what you rejected)</th><th>New loop</th></tr></thead>
+    <tbody>
+      <tr><td>Unit of teaching</td><td class="old">One 2.5-hour page covering 13 chapters</td><td>One concept per cycle, about 5 to 10 minutes</td></tr>
+      <tr><td>Starting point</td><td class="old">General order, guessed from rounds of questions</td><td>The single biggest gap blocking one of your projects</td></tr>
+      <tr><td>Examples</td><td class="old">Generic, with some of your setup mixed in</td><td>Your projects: Paperclip, REA on your Unity game, the content pipeline, Jev, the research agent, the Lab</td></tr>
+      <tr><td>Freshness</td><td class="old">One research pass up front</td><td>Research for every concept, including the videos and repos you send, citing only pages actually opened</td></tr>
+      <tr><td>Your say</td><td class="old">You read what I wrote</td><td>You pick between two versions of each lesson (A or B, and why), the same method you designed for your learning agent</td></tr>
+      <tr><td>Proof you learned it</td><td class="old">A re-test after the whole page</td><td>A re-test right after each concept, plus a small step on a real project</td></tr>
+      <tr><td>Memory</td><td class="old">Notes saved at the end</td><td>Your profile updated every cycle: what you know, and which teaching style worked</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2><span class="n">02</span>Activity diagram: one full cycle</h2>
+  <div class="frame"><pre class="mermaid">
+flowchart TD
+  S(["Start cycle"]) --> P["Load your profile: both chats, all past answers, your projects"]
+  P --> T{"Pick next concept: biggest gap that blocks a project"}
+  T --> G["GAUGE: 4 to 6 fair questions, equal-length options, not-sure allowed, no repeats"]
+  G --> D["DIAGNOSE each answer: knows it, misconception, or gap"]
+  D --> K{"Already solid?"}
+  K -- yes --> V["Mark verified, skip teaching"]
+  K -- no --> R["RESEARCH: docs, repos, your videos, opened pages only"]
+  R --> AB["Draft lesson A and lesson B, two ways of teaching it"]
+  AB --> C["You pick A or B, and say why"]
+  C --> L["TEACH: one concept, 5 to 10 minutes, built on your project"]
+  L --> PR["APPLY: one small step on that project"]
+  PR --> RT["RE-TEST: new questions on the same concept"]
+  RT --> Q{"About 80 percent or better?"}
+  Q -- no --> AL["Teach it a different way, using your last pick"]
+  AL --> RT
+  Q -- yes --> V
+  V --> U["UPDATE profile: mastery plus which teaching style worked"]
+  U --> M{"Whole map verified?"}
+  M -- no --> T
+  M -- yes --> E(["You understand the field. Next: the capstone Lab."])
+  </pre></div>
+  <p class="reads">The loop never mixes phases. Each message says which step it is: gauge, research, teach, apply or re-test.</p>
+
+  <h2><span class="n">03</span>Sequence diagram: who does what</h2>
+  <div class="frame"><pre class="mermaid">
+sequenceDiagram
+  actor You
+  participant T as Claude, tutor
+  participant M as Memory and profile
+  participant R as Research agents
+  participant P as Your project
+  T->>M: Read gaps, past answers, preferences
+  T->>You: Gauge questions for one concept
+  You-->>T: Answers
+  T->>M: Save knows, misconceptions, gaps
+  T->>R: Research this gap, current sources only
+  R-->>T: Cited notes from opened pages
+  T->>You: Lesson A and lesson B previews
+  You-->>T: Pick plus why
+  T->>You: Teach the chosen version
+  You->>P: Apply one small step
+  T->>You: Re-test with new questions
+  You-->>T: Answers
+  T->>M: Update mastery and teaching-style preference
+  </pre></div>
+  <p class="reads">Research agents only run when a concept needs current facts. Memory is what lets a new session pick up exactly where the last one stopped.</p>
+
+  <h2><span class="n">04</span>State machine: one concept's life</h2>
+  <div class="frame"><pre class="mermaid">
+stateDiagram-v2
+  [*] --> Unknown
+  Unknown --> Gauged: questions asked
+  Gauged --> Verified: right answer, fair question
+  Gauged --> Misconception: confident wrong answer
+  Gauged --> Gap: not sure
+  Misconception --> Taught: lesson replaces the wrong belief
+  Gap --> Taught: lesson fills it
+  Taught --> Taught: re-test failed, taught another way
+  Taught --> Verified: re-test passed
+  Verified --> Applied: used on a real project
+  Applied --> [*]
+  </pre></div>
+  <p class="reads">Every concept on your map sits in one of these states. Misconceptions get extra care, because a wrong belief has to be replaced, not just added to.</p>
+
+  <h2><span class="n">05</span>Rules the loop follows</h2>
+  <ul class="rules">
+    <li><b>Fair questions</b><small>Options of equal length and detail, varied answer positions, "not sure" always allowed, never a repeat.</small></li>
+    <li><b>One concept at a time</b><small>No 2-hour pages. A cycle ends when that one concept is verified.</small></li>
+    <li><b>Your projects are the examples</b><small>Paperclip, REA on your Unity game, the content pipeline, Jev, the research agent, the Lab.</small></li>
+    <li><b>Research before teaching</b><small>Current sources for each concept, including your links. Unverified claims are marked.</small></li>
+    <li><b>You choose the teaching style</b><small>A or B per lesson. Your picks teach me how you learn best.</small></li>
+    <li><b>No clutter</b><small>Short lessons, one page or one message, nothing you don't need.</small></li>
+    <li><b>Straight answers</b><small>Pros and cons stated plainly when you ask, including when I disagree.</small></li>
+    <li><b>Saved every cycle</b><small>Profile, answers and preferences go to memory, so nothing has to be repeated.</small></li>
+  </ul>
+
+  <div class="approve">
+    <h3>To approve, answer in chat</h3>
+    <ol>
+      <li>Approve as is, or tell me what to change.</li>
+      <li>Keep the A-or-B lesson pick, or drop it to go faster?</li>
+      <li>Lessons in chat, or as a short page each time?</li>
+    </ol>
+  </div>
+</div>
