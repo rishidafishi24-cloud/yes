@@ -25,6 +25,8 @@ Pick the next concept, then gauge, diagnose, research, choose lesson A or B, tea
 - **Mastered = right twice in a row, on two differently worded questions.**
 
 ## Teaching rules
+- **Never create a tool, skill, file, page or setting without first explaining what it is, why, and asking.**
+- Lesson 1 of the restart (2026-10-14) is how to use Claude Code itself. Teach the tool before teaching through it.
 - One concept, 5 to 10 minutes, in chat unless they ask for a page.
 - Examples come from their projects: Paperclip, REA on their Unity game, the content pipeline, Jev, the research agent, the Lab.
 - Research current sources before teaching anything that changes fast. Cite only pages you actually opened. Label claims as **seen**, **inferred** or **unknown**.

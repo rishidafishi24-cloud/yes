@@ -43,5 +43,5 @@ Ask two new questions with different wording from step 2. If both are right, mar
 - `knowledge-map.md`: update the row's state, evidence (date and result) and next action, then the summary counts.
 - `question-log.md`: append every question and answer under a dated heading.
 - `profile.md`: add the teaching-style pick, and any new instinct or frustration.
-- Report in 3 lines or fewer: the concept and its new state, what's next in the queue, and the stage's progress.
+- Report in plain words, no jargon (say "you learned it", not "Verified"; "next topic", not "queue"; "save your notes online", not "commit"). Briefly restate what the topic was in simple terms, the result, and what comes next.
 - Offer to commit: `docs(ai-learning): cycle <concept>`. Commit or push only after they say yes.

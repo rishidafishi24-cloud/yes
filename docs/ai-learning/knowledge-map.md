@@ -12,7 +12,7 @@ The source of truth for what the owner knows. Merged on 2026-10-14 from the loca
 | 2 | Temperature | Verified | Local round 12 | none |
 | 3 | Weights are fixed, chatting changes context only | Verified | Yo scoreboard, local W2 | none |
 | 4 | Statelessness: the app resends the whole package every message | Taught | Local W3 "not sure"; cycle 1 gauge L1 ✗; re-test #1 0 of 4 (still pictures the model or cache holding the chat); re-test #2: 2 of 3 right in a row (app vs. model ✓, package ✓) ; F1 ✗ (cache = memory), then disproved by a live experiment on their own model | **Re-test next session: cache vs. memory only** |
-| 5 | Context overflow: the app trims or summarizes, nothing is "compressed into memory" | Taught | Misconception in local round 10. Yo: "it starts shortening the context and keeps key points" (close) | **Re-test** |
+| 5 | Context overflow: the app trims or summarizes, nothing is "compressed into memory" | Verified | Misconception in local round 10. Yo: "it starts shortening the context and keeps key points" (close); cycle 2 (2026-10-14): G1 ✓, G3 ✓ (didn't know the word "truncate") | none |
 | 6 | KV cache and prompt caching are shortcuts, not memory | Taught | Misconception in local round 14 ("model memory") | **Re-test** |
 | 7 | Chat templates (`<\|im_end\|>` leaking) | Taught | Misconception in local round 4 ("not enough VRAM") | **Re-test** |
 | 8 | Prefill (reading) vs. decode (writing) speed | Verified | Yo scoreboard | none |
@@ -77,8 +77,8 @@ The source of truth for what the owner knows. Merged on 2026-10-14 from the loca
 | 57 | What image and video models do and don't understand | Gap | Their own open question in Yo | Gauge |
 
 ## Summary (2026-10-14)
-- **Verified:** 28 of 57
-- **Re-test (Taught or Half):** 18
+- **Verified:** 29 of 57
+- **Re-test (Taught or Half):** 17
 - **Gap:** 9
 - **Misconception still open:** 2 (npm/package.json, VRAM vs. compute)
 - Stage 1 is almost done. Clear the re-test queue first, then start Stage 2.

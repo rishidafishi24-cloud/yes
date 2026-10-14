@@ -173,3 +173,10 @@ The full questions and answers are in `2026-10-14-yo-session-transcript.md` (use
 | F2 Odysseus knows the color in a new chat | The app's memory file | ✓ |
 
 **Live experiment (2026-10-14):** on qwen3.5-9b-abliterated through LM Studio's server. Request A (name included, 47 tokens) answered "Your name is Alex." Request B, sent right after with the cache warm and the name deleted (25 tokens), answered "I don't know your name." Proves the cache is not memory.
+
+## Tutor cycle 2: context overflow (2026-10-14)
+| Q | Answer | Result |
+|---|---|---|
+| G1 Long Odysseus chat past its context: who decides what gets shortened | The app's rules | ✓ |
+| G2 LM Studio "truncate middle": what the model still sees | "trunacate whonucate" (didn't know the word) | ? vocabulary: truncate = cut off |
+| G3 Risk of Odysseus summarizing the older half | Details lost or changed | ✓ |
