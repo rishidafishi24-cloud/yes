@@ -169,3 +169,7 @@ The full questions and answers are in `2026-10-14-yo-session-transcript.md` (use
 | Q1 Delete the "favorite color" message in Odysseus, then ask | "It still knows" (reason given: the model remembered) | ✗ reason. Question flawed: Odysseus memory could re-insert it |
 | Q2 Claude Code + Opus: which part has zero memory | Opus, the model | ✓ |
 | Q3 Janitor lorebook dragon info goes where | Into the package ("how hard is cache engineering?") | ✓ |
+| F1 Plain LM Studio: delete the name message, then ask | "It knows: the cache kept it" | ✗ then disproved live (see below) |
+| F2 Odysseus knows the color in a new chat | The app's memory file | ✓ |
+
+**Live experiment (2026-10-14):** on qwen3.5-9b-abliterated through LM Studio's server. Request A (name included, 47 tokens) answered "Your name is Alex." Request B, sent right after with the cache warm and the name deleted (25 tokens), answered "I don't know your name." Proves the cache is not memory.

@@ -44,3 +44,10 @@ Updated 2026-10-14 from two chats: the local Claude Code session (Oct 13–14) a
 - 2026-10-14: what they want is "an agent I can talk to that keeps learning off me and adding context", and they don't want it complicated. This setup (chat + notes files + skill) is that. Don't add agents or tools for it.
 - 2026-10-14, cycle 1: the calculator analogy plus sequence diagram did NOT land (re-test 0 of 4). Try a concrete artifact next (the actual JSON package, a notepad metaphor). Also wants to learn how to change model weights (Stage 7).
 - 2026-10-14: the app vs. model split clicked through their own examples ("ChatGPT web is an app, not a model"; Chub/Janitor = basic apps that add a system prompt). Plain step-by-step from zero plus their own examples works better than diagrams-first. Concrete everyday examples beat metaphors.
+
+## Sandbox RPG planning
+- 2026-10-14: Project at C:\Users\god\Documents\ChatGPT\gb. Product/architecture discussion only until implementation is explicitly authorized. REA and Universal Modder are the intended investigation/adaptation/verification tools; they are not assumed to extract portable mechanics automatically.
+- Develop ordinary slow/weak gameplay and simplified fast/high-power gameplay together in one shared prototype, expanding gradually. Playable spherical mini-planets are later content, not the starting assumption for Earth.
+- Combat camera should follow automatically with a fast, sharp response; hands are occupied with combat inputs, so continual use of the look stick should not be required. Foreground walls/surfaces blocking the action should become extremely transparent. Target switching and teleport tracking remain unresolved.
+- Detailed confirmed/open/proposed game context: .cursor/rules/game-product-context.mdc and docs/design/power-scaled-movement-combat.md in the game project.
+- 2026-10-14: **Live demos on their own model beat explanations.** Three explanations failed, but one real experiment (deleted message + warm cache, via the LM Studio API) made it concrete. Prefer "prove it on their PC" when possible.
