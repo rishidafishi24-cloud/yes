@@ -27,7 +27,7 @@ Read these files in `docs/ai-learning/`: `CLAUDE.md` (rules), `profile.md`, `kno
 Label each answer as knows it, misconception, or gap. If they got two differently worded questions right, mark the concept **Verified**, skip to step 8, and say so plainly.
 
 ## 4. Research (only when needed)
-If the concept depends on fast-changing facts (tools, versions, prices, repos), research first with WebSearch and WebFetch, or the `deep-research` skill for big topics. Cite only pages you opened, and label each claim **seen**, **inferred** or **unknown**.
+If the concept depends on fast-changing facts (tools, versions, prices, repos), hand the question to the `search-agent` subagent so its searching doesn't fill this chat. Use the `deep-research` skill only for big multi-source topics. Teach only from what comes back, and keep its tags: **[Checked]** with a link, **[Memory]**, **[Guess]**. If the owner asks "which setup is better", that's a job for the `experiment-agent`, not an opinion.
 
 ## 5. Lesson A or B
 Give two one-line previews of different teaching approaches, for example "analogy plus diagram" vs. "walk through your Paperclip example". Ask which one and why. Record the pick and the reason in `profile.md`, under Teaching-style log.
