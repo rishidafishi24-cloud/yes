@@ -162,3 +162,10 @@ The full questions and answers are in `2026-10-14-yo-session-transcript.md` (use
 | R2 Switch to a cloud model mid-chat: does it see earlier messages? | "Only a summary" | ✗ |
 | R3 Claude Code needs an unseen file | "It just starts searching everywhere if given permission" | ~ (the app does the searching) |
 | R4 Which layer saves chat history | "Cache and app" (wants to learn changing weights too) | ~ (app yes, cache no) |
+
+### Cycle 1 re-test #2 (2026-10-14)
+| Q | Answer | Result |
+|---|---|---|
+| Q1 Delete the "favorite color" message in Odysseus, then ask | "It still knows" (reason given: the model remembered) | ✗ reason. Question flawed: Odysseus memory could re-insert it |
+| Q2 Claude Code + Opus: which part has zero memory | Opus, the model | ✓ |
+| Q3 Janitor lorebook dragon info goes where | Into the package ("how hard is cache engineering?") | ✓ |
