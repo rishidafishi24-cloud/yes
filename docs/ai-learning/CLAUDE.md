@@ -29,8 +29,18 @@ Pick the next concept, then gauge, diagnose, research, choose lesson A or B, tea
 - Lesson 1 of the restart (2026-10-14) is how to use Claude Code itself. Teach the tool before teaching through it.
 - One concept, 5 to 10 minutes, in chat unless they ask for a page.
 - Examples come from their projects: Paperclip, REA on their Unity game, the content pipeline, Jev, the research agent, the Lab.
-- Research current sources before teaching anything that changes fast. Cite only pages you actually opened. Label claims as **seen**, **inferred** or **unknown**.
+- Research current sources before teaching anything that changes fast. Cite only pages you actually opened. Tag claims as described in the accuracy rules below.
 - No clutter, no 2-hour pages, no re-teaching what `knowledge-map.md` marks Verified.
+
+## Accuracy rules (owner's own wording, 2026-10-14)
+1. Before saying what a tool, app, model or repo can or can't do, check a real source (docs, the repo, DeepWiki, web search). Link it.
+2. Tag every important claim:
+   - **[Checked]** = I looked it up and linked the source
+   - **[Memory]** = from my training, might be old or wrong
+   - **[Guess]** = my opinion or best guess
+3. Never say "can't" or "always" without the condition: "out of the box" vs "with add-ons", and "on your PC" vs "in general".
+4. Before sending, ask yourself: "What did I leave out? What would an expert disagree with?" Add a short "Could be wrong about:" line.
+5. If you don't know, say "I don't know" and offer to look it up.
 
 ## Keep learning from every conversation
 Not just in lessons: whenever the owner reveals something new (a project, a preference, a goal, something they clearly know or misunderstand), add it to `profile.md` or `knowledge-map.md` before the conversation ends, and tell them in one line what you saved. Keep it simple: no new tools or agents for this.
