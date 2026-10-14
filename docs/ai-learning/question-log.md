@@ -180,3 +180,12 @@ The full questions and answers are in `2026-10-14-yo-session-transcript.md` (use
 | G1 Long Odysseus chat past its context: who decides what gets shortened | The app's rules | ✓ |
 | G2 LM Studio "truncate middle": what the model still sees | "trunacate whonucate" (didn't know the word) | ? vocabulary: truncate = cut off |
 | G3 Risk of Odysseus summarizing the older half | Details lost or changed | ✓ |
+
+## Restart lesson 1: Claude Code basics (2026-10-14)
+| Q | Answer | Result |
+|---|---|---|
+| C1 What part of Claude Code ran the LM Studio name experiment | "Don't even know what this context is" | ? (never noticed the tool-call boxes) |
+| C2 What changed after /model Sonnet to Opus | "Opus is better reasoning" | ~ |
+| C3 Where an "answer first" rule belongs | In CLAUDE.md | ✓ |
+| D1 What the small labeled boxes in the chat are | "Tips from the app" | ✗ then live demo of a tool call |
+| D2 What stayed the same after switching models | App, chat and notes | ✓ |

@@ -70,3 +70,6 @@ stateDiagram-v2
   Verified --> Applied: used on a real project
   Applied --> [*]
 ```
+
+## Research, study, experiment, record (added 2026-10-14)
+The main loop now has an **Experiment** step: after research finds new models or tools and a lesson explains them, test them on the owner's fixed test tasks in `experiments/README.md` and record the results in `experiments/log.md`. Results decide what to research next. Runs best in **OpenCode with OpenRouter models** (settings in `opencode.json` at the repo root). This is an early, simple version of the AI Experiment Lab (roadmap Stage 8).

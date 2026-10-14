@@ -1,6 +1,8 @@
 ---
 name: tutor-cycle
 description: Run one cycle of the owner's personal AI course. It gauges one concept with fair questions, diagnoses, researches if needed, teaches it with the owner's own projects, re-tests, and updates docs/ai-learning. Use when the owner says "tutor", "next lesson", "quiz me", "continue my course", or invokes /tutor-cycle.
+metadata:
+  opencode/slash: "true"
 ---
 
 # Tutor cycle

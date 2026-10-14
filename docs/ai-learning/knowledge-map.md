@@ -63,6 +63,7 @@ The source of truth for what the owner knows. Merged on 2026-10-14 from the loca
 | 46 | GGUF vs. safetensors | Half | Yo | **Re-test** |
 | 47 | Open weights and licenses | Half | Yo, plus local round 17 Q3 on licenses | **Re-test** |
 | 48 | RX 580 on Vulkan, and how to optimize big local models | Taught | Local chat (Oct 14) | **Re-test** |
+| 58 | Claude Code basics: model, tools, folder, permissions, slash commands, skills, CLAUDE.md | Taught | Restart lesson 1: C3 ✓, D2 ✓, C2 ~, didn't recognize tool-call boxes (D1 ✗), live demo given | Re-test: tool calls |
 | **Evals (Stage 2)** |||||
 | 49 | Repeat runs and the luck band | Verified | Yo scoreboard, their own Paperclip plan | none |
 | 50 | Pairwise A/B preference judging | Verified | Their own learning-agent design | none |

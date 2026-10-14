@@ -19,6 +19,9 @@ The owner's personal AI course: a loop of gauge, teach and re-test, built around
 | `2026-10-14-yo-session-transcript.md` | Full transcript of the Yo cloud chat |
 | `lessons/` | Lesson pages already built (HTML) |
 | `research/` | Deep-research report and notes (October 2026) |
+| `experiments/` | Model experiments: test tasks (`README.md`) and results (`log.md`) |
+| `start-prompt.md` | A start prompt for a fresh session |
+| `odysseus-system-prompt.md` | Short ask-first rules to paste into Odysseus |
 
 ## Published pages (private to the owner)
 - Learning loop blueprint: https://claude.ai/artifact/EQ7AZdQ7vGPZCqysc4xCw6
