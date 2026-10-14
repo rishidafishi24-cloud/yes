@@ -16,7 +16,11 @@ Answer one question with checked facts. Every important claim gets a source or a
 | Claude Code itself | `WebFetch` on `https://code.claude.com/docs/en/...` | `WebSearch` |
 | A file in this project | `Read`, `Grep`, `Glob` | none needed |
 
-YouTube and Instagram transcripts: not set up yet (needs `yt-dlp`, not installed). Say so instead of guessing what a video says.
+**YouTube transcripts:** `yt-dlp` 2026.8.19 is installed at `C:\Users\god\.local\bin\yt-dlp.exe` (not on PATH, so use the full path). It needs a shell, which the `search-agent` does not have, so the main chat runs it, then the agent reads the saved file:
+`yt-dlp --skip-download --write-auto-subs --write-subs --sub-langs "en.*" --sub-format vtt -o "%(id)s" "<url>"`
+Tested 2026-10-14 on one video: works with no login. Use the plain `.en.vtt` file, not `en-orig` (it has word-timing clutter). Expect occasional `429 Too Many Requests` on extra language variants; the main English file still arrives.
+
+**Instagram transcripts:** not working. yt-dlp needs a login for Instagram and has no transcript feature. A public reel is untested. Never use the owner's cookies or account. Say "I can't read this" instead of guessing what a video says.
 
 ## 2. Search
 - Run the first tool. Open the best 1 to 3 pages with `WebFetch` when the search snippet isn't enough.
