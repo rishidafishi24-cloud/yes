@@ -58,3 +58,4 @@ Updated 2026-10-14 from two chats: the local Claude Code session (Oct 13–14) a
 - 2026-10-14: **didn't know the small boxes in Claude Code's chat are tool calls** (thought they were tips), so they had never been checking what I actually did. Teach the UI hands-on.
 - 2026-10-14: rejected starting a new session: "every interaction is context for personalizing the lesson." Keep teaching in the same session when possible, and save conversations into notes.
 - 2026-10-14: wants a **research, study, experiment** workflow running on **OpenRouter models**, in OpenCode (installed in WSL Ubuntu, v1.18.32). Research compiles the newest models, and experiments test them on fixed tasks. Starting defaults: deepseek-v4.1-flash and qwen3.8-flash (untested).
+- 2026-10-14: **Default level = 4th grade.** Teach only exactly what they ask, very basic, short but detailed, objective. Use charts or UML diagrams only when they help. Go deeper only when they ask.
