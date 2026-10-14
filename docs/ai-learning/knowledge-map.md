@@ -11,7 +11,7 @@ The source of truth for what the owner knows. Merged on 2026-10-14 from the loca
 | 1 | Tokens, next-token prediction | Verified | Local round 12 | none |
 | 2 | Temperature | Verified | Local round 12 | none |
 | 3 | Weights are fixed, chatting changes context only | Verified | Yo scoreboard, local W2 | none |
-| 4 | Statelessness: the app resends the whole package every message | Taught | Local W3 "not sure", then taught in Yo and in the lesson | **Re-test** |
+| 4 | Statelessness: the app resends the whole package every message | Misconception | Local W3 "not sure"; cycle 1 gauge L1 ✗; re-test #1 0 of 4 (still pictures the model or cache holding the chat) | **Re-teach a different way** |
 | 5 | Context overflow: the app trims or summarizes, nothing is "compressed into memory" | Taught | Misconception in local round 10. Yo: "it starts shortening the context and keeps key points" (close) | **Re-test** |
 | 6 | KV cache and prompt caching are shortcuts, not memory | Taught | Misconception in local round 14 ("model memory") | **Re-test** |
 | 7 | Chat templates (`<\|im_end\|>` leaking) | Taught | Misconception in local round 4 ("not enough VRAM") | **Re-test** |

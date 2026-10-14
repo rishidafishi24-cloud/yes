@@ -42,3 +42,5 @@ Updated 2026-10-14 from two chats: the local Claude Code session (Oct 13–14) a
 (Each cycle, add which lesson version they picked, A or B, and why.)
 - 2026-10-14, cycle 1 (layering): didn't pick A or B. Wants **UML diagrams where possible, with a technical and a plain-English explanation side by side** until the terms are solid. Default to this format.
 - 2026-10-14: what they want is "an agent I can talk to that keeps learning off me and adding context", and they don't want it complicated. This setup (chat + notes files + skill) is that. Don't add agents or tools for it.
+- 2026-10-14, cycle 1: the calculator analogy plus sequence diagram did NOT land (re-test 0 of 4). Try a concrete artifact next (the actual JSON package, a notepad metaphor). Also wants to learn how to change model weights (Stage 7).
+- 2026-10-14: the app vs. model split clicked through their own examples ("ChatGPT web is an app, not a model"; Chub/Janitor = basic apps that add a system prompt). Plain step-by-step from zero plus their own examples works better than diagrams-first. Concrete everyday examples beat metaphors.

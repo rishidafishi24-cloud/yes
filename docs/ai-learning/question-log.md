@@ -154,3 +154,11 @@ The full questions and answers are in `2026-10-14-yo-session-transcript.md` (use
 | N2 Skill vs. system prompt conflict | Nothing guarantees it | ✓ |
 | N3 Local to OpenRouter: which layers change | Model and provider | ✓ |
 | N4 Same REA server, different results in different apps | "Repos are built for Claude Code" | ~ |
+
+### Cycle 1 re-test #1 (2026-10-14)
+| Q | Answer | Result |
+|---|---|---|
+| R1 System prompt changed mid-chat: does the model see it? | "No, it kept the old one" | ✗ |
+| R2 Switch to a cloud model mid-chat: does it see earlier messages? | "Only a summary" | ✗ |
+| R3 Claude Code needs an unseen file | "It just starts searching everywhere if given permission" | ~ (the app does the searching) |
+| R4 Which layer saves chat history | "Cache and app" (wants to learn changing weights too) | ~ (app yes, cache no) |
