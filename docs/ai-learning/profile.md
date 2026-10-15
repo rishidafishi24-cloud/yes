@@ -122,3 +122,5 @@ Updated 2026-10-14 from two chats: the local Claude Code session (Oct 13–14) a
 - 2026-10-15: User's main animation/image concerns: detail, fuzziness, line consistency, FPS/speed, scene context and an AI-looking appearance. Explain these in basic steps; distinguish picture fixes from motion timing and scene meaning. The incomplete phrase 'being too,' remains unresolved. These are user priorities, not proven universal defect rankings; only the user judges whether a fix improves the result.
 
 - 2026-10-15: Animation app: user requested the simple creation/editing/animation guidance as a 'side agent for noobs'. Interpret as a beginner-assistant app feature; exact placement and how actively it changes work remain open. Optional assistance alongside full creative tools is a proposal, not an implemented agent or selected provider.
+
+- 2026-10-15: Animation beginner assistant placement confirmed: user wants a small Copilot-style helper they can turn on/off inside the main app. It is optional alongside normal tools, not a separate beginner workspace. Model/provider and how actively it performs edits remain undecided.
