@@ -247,3 +247,5 @@ Updated 2026-10-14 from two chats: the local Claude Code session (Oct 13–14) a
 ## 2026-10-17: what a "first attempt" must show
 - I judged the 3D base a "very bad 1st attempt": it was invisible engine plumbing (physics, streaming, parts, tests) with gray boxes, no fighting, and a city that "doesn't feel like a city at all."
 - I want visible, game-like results early: real fighting, a place that feels real, characters/models (stand-ins are fine). Build a small piece of the real game properly (a vertical slice) instead of invisible foundations first.
+
+- 2026-10-17: Animation study references: wants organized local folders of impact frames and action poses with source links. Focus: popular One Piece fights from episode 1000 onward, Vinland Saga fights, To Be Hero X fights, Jujutsu Kaisen fights, Naruto vs Sasuke, and Kakashi vs Obito.
