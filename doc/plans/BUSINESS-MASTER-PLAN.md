@@ -1,43 +1,73 @@
-# Business Master Plan: Original Character Shop + Content Studio
-Version 2, 2026-10-20. Replaces the unverified parts of doc/plans/2026-10-19-business-and-content-plan.md. Planning only: no account created, no money spent.
+# Channel Lab + Side Shop — Master Plan (revised 2026-10-20)
 
-## 1. Facts about the owner (answered 2026-10-19)
-18+, United States, Windows PC, beginner. OpenCode with paid DeepSeek and free models. Total budget under $20 a month. Weak models do about 75% of the work; a strong model designs and reviews. The owner approves every upload and every spend. Two attempts (confirm: Q6), then the owner. Four channels wanted (original characters, game devlog, ambient/lofi, AI tools/tests). Print on demand: Printful free plan. Original work only, AI disclosure always, license record for every asset, shop is sealed.
+This project stands alone. The agent is `business`. Side-shop files arrive only when the owner copies
+them by hand. Budget: $0 by default (the owner is broke); hard cap $20/month shared with everything.
 
-## 2. Two halves, one rulebook
-- SHOP (sealed): Etsy, Printful, itch.io later. Folder `shop/`. Reads nothing outside. Files arrive by hand in `shop/intake/<pack>/` with `manifest.json`.
-- CONTENT: shorts first. Folder `content-work/` (outside every repo) plus a COPY of tools/content-shorts. The Paperclip company package is a source of role text only; it is not running.
-- Crossing: the owner carries files by hand (finished art into shop/intake; listing URLs and the Share & Save link into content briefs).
+## What it is
+A network of video channels run as EXPERIMENTS, plus a small side shop (Etsy / itch / Gumroad).
+Channel ideas: sleep/ambient (popular format), AI news, a persona channel (original character), and
+the owner's own new ideas. Voices: free AI voice, invented persona voice, the owner's own voice on
+1-2 channels, or no voice.
 
-## 3. What is true about the tools (tested 2026-10-20, Linux, synthetic video)
-Works: reframe, style, loudness, check (pass and fail cases), batch (preset and music variants), mix_music, captions burn, sources add. Not run: Whisper captions, all live sources (Pexels, Pixabay, NASA, Archive). Not tested on Windows. Known problems: batch.py uses `python3`; the license check does not confirm the files exist or match what was used; `check` only accepts 1080x1920 and 60 s by default (ambient needs a new check); no loop, contact-sheet or stats script; sources.py accepts CC BY-SA.
+## Goal
+LEARN AND TEST IDEAS. Find out which channel ideas get watched, using cheap tests, then keep, change
+or kill each by numbers decided in advance. Money comes later and is never promised.
 
-## 4. Policies re-checked 2026-10-20 (secondary sources; open the official page before acting)
-[Checked] Etsy: $0.20 listing, 6.5% transaction, 3% + $0.25 processing; AI allowed with disclosure in the listing; "designed by" label with a production partner for POD; prompt bundles not allowed. [Stale/unconfirmed] Etsy one-time setup fee of $15. [Checked] Printful free plan: 20% off samples, one sample order a month, up to 3 items. [Stale/unconfirmed] free sample shipping. [Checked] YouTube: mass-produced or repetitive content is not monetizable (since 2025-07-15); original value is fine. [Checked, dated 2024-11] itch.io: asset pages answer the generative-AI question; untagged AI assets can lose indexing. Not re-checked: Gumroad, Ko-fi, YPP and TikTok thresholds, tax figures.
-Price formula (US, shipping in price, no Offsite Ads, one item, no tax): P = (base incl. shipping + profit + 0.45) / 0.905. Example: (16.25 + 6 + 0.45)/0.905 = 25.08 -> list at 25.99. Digital $6.99 nets 0.905 x 6.99 - 0.45 = $5.88.
+## Owner decisions (2026-10-20)
+- Start with 3 or more channels, as cheap experiments. Broke: spend $0; spend only with an exact
+  amount and a written yes. Owner approves every upload. 2 failed attempts, then ask the owner.
+- Shop side track is free/digital-only until the owner says otherwise.
 
-## 5. Money plan (the money gate)
-Every spend needs the owner's "go" in writing in ROUTING-LOG.md.
-| Month | Planned spend | Total |
-| 1 | digital listings 25 x $0.20 = $5; DeepSeek $1-3; Etsy setup fee only if the owner chooses (about $15, unconfirmed) | about $6-8, or about $21-23 with the fee |
-| 2 | listings $2-5, DeepSeek $1-3, one Printful sample (about $12-15, 20% off) | about $15-23 |
-| 3+ | recurring about $3-8; paid plans, ads, paid AI video or music: $0 until profit covers them |
-If a month would pass $20, the agent says so first and the owner decides.
+## Rules
+- Every channel has a one-page CHANNEL CARD first (name, promise, audience, format, voice type,
+  disclosure line, sources/licenses, small schedule, one metric, keep/change/kill rule).
+- Each channel has its own identity and real human choices; no cloned templates (demonetization risk).
+- AI voices are disclosed. Never clone a real person's voice. AI news uses real linked sources only
+  and publishes corrections. Never copy another channel's script, footage, thumbnails, music or name.
+- One change per variant. Pipeline: brief -> variants -> automatic checks -> read-only reviewer ->
+  owner picks and uploads. License file for every asset.
 
-## 6. Order of work
-Week 0 (before week 1): accounts by hand; folders; templates; banned-words.md; Windows install and the 4-step toolkit self-test; character name search. Weeks 1-2: first digital pack (6 emotes at 28/56/112 px plus a master), intake -> package -> listing -> strong review -> owner publishes. Content: brief 1 "Meet <character>" (vary hook), first batch from the owner's own screen recording, review, owner picks, one upload. Weeks 3-4: 2 more digital packs; POD drafts only; sample decision brief (owner go/no-go); brief 2-3; first weekly review. Week 4 onward: devlog episode 1 from the owner's own game. Month 2: Printful sample, POD listings, itch.io pack plan. Week 7 or later: ambient only after a long-video check exists and the owner says go. AI-tools channel only with a results file for every claim.
+## Waves
+| Wave | Channels | Voice | Why first |
+|---|---|---|---|
+| 1 | Sleep/ambient | none (music only) | easiest: loop + licensed music |
+| 1 | AI news | free AI voice, disclosed | tests sourcing, scripting, voice |
+| 1 | Persona channel | invented persona voice | ties to the owner's original character |
+| 2 | The owner's own ideas | any | each idea = 3 test videos before it becomes a channel |
+| any | Own-voice channel (1-2) | the owner records | most trusted by viewers; pick the best fit later |
 
-## 7. Channel order (default)
-1 character shorts, 2 devlog, 3 ambient/lofi, 4 AI tools/tests. Post one chosen variant per brief; keep the others private.
+## Steps (each needs the owner's go)
+1. Fix the toolkit's 5 known faults (below) and install Python + ffmpeg on the PC.
+2. Write the channel cards (owner picks names and ideas).
+3. Free voice test: owner listens to 2-3 free voices and picks one.
+4. First batch per wave-1 channel (4 variants each, one change per variant), reviewed, owner uploads.
+5. After 10 uploads or 28 days per channel: numbers -> keep / change / kill.
+6. Start wave 2 only after wave 1 has numbers.
 
-## 8. Roles by hand
-Paperclip wake-ups, issues, the Learning agent, Memory and the stats script are not running. Every role is a prompt section: Content Lead (briefs), Shorts Creator (batch.json and runs), Reviewer (separate chat, edit denied, cannot see images if DeepSeek), owner (picks, upload). Learning packet and published.csv are files the owner pastes into.
+## Toolkit faults to fix first (found by running it)
+`check` passes a license entry whose file is missing; a music track missing from license.json passes;
+`batch.py` hard-codes `python3` (Windows); `check` only accepts 1080x1920 so ambient videos cannot be
+checked; `sources.py` accepts CC BY-SA though the README says it does not; Whisper captions need
+`faster-whisper` installed.
 
-## 9. Open items before week 1
-Answer the 12 questions; fix batch.py/captions.py in the content-work copy; write a long-video check; decide CC BY-SA policy; confirm OpenCode agent folder name and run the agent once; fill pricing.md from the Printful screen; confirm the Etsy setup fee on the real screen.
+## First tickets
+| ID | Ticket | Tier | Oracle |
+|---|---|---|---|
+| C1 | Channel card template | T3 | file exists; every field required |
+| C2 | Fix `check` to fail on a missing license file and an unlisted music track | T2 | new tests fail before, pass after |
+| C3 | Make `batch.py` use the current Python on Windows | T1 | batch runs with `py` or `python` |
+| C4 | Let `check` accept a landscape/ambient profile | T2 | test with a 1920x1080 synthetic video |
+| C5 | Reject CC BY-SA in `sources.py` or update the README | T1 | test on a CC BY-SA fixture |
+| C6 | Draft one card per wave-1 channel from the owner's picks | T2 | each card complete, no empty field |
+| C7 | AI-news sourcing and correction policy | T3 | one page the reviewer can check against |
+| C8 | Free voice test script (3 voices, same paragraph) | T1 | 3 audio files saved; owner listens |
+| C9 | First batch per channel | T1 runs, T2 briefs | `index.json` and records; one change per variant |
+| C10 | Review each batch (read-only) | T2 | verdict with evidence per variant |
 
-## 10. Tickets (kept from the saved plan, with corrections)
-S-01 answer questions; S-02 folder tree; S-03 install agents (test: write outside shop must ask/refuse); S-04 banned-words (>=40); S-05 disclosure snippets; S-06 pricing.md (formula reproduces $25.08); S-07 character and identity (strong model, owner approves); S-08 Etsy setup (owner); P-01..P-08 pack flow; B-01/B-02 bookkeeping; C-01 Windows install note; C-02 self-test = reframe, style, loudness, check exit 0 on a real recording (corrected oracle); C-03..C-09 briefs and batches; C-10 toolkit fix proposals (CC BY-SA, license-file existence check, python3, AI-label field); C-11 stage decision; R-01/R-02 reviews; L-01 itch.io plan. 33 tickets: 3 owner-only, 10 T1, 15 T2, 5 T3.
+## Side shop (free track)
+Digital packs only at first (emotes, stickers, wallpapers). No Etsy setup fee, no Printful sample, no
+paid plan until the owner writes yes with an exact amount. Sealed folder `shop/intake/<pack>/`.
 
-## 11. Limits
-Everything about platform money and rules comes from blogs and search summaries; the official pages were not opened. The toolkit has never run on real footage or on Windows. The Paperclip runtime is not verified live (decision log 2026-09-28).
+## Budget
+$0 now. Optional later, each only with the owner's yes: Etsy setup fee (about $15, unconfirmed),
+a Printful sample, a paid voice or tool.
